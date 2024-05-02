@@ -2,17 +2,15 @@
 
 namespace ProgrammatorDev\OpenWeatherMap\Exception;
 
-use ProgrammatorDev\OpenWeatherMap\Entity\Error;
-
 class ApiErrorException extends \Exception
 {
     private ?array $parameters;
 
-    public function __construct(Error $error, \Throwable $previous = null)
+    public function __construct(array $error)
     {
-        parent::__construct($error->getMessage(), $error->getCode(), $previous);
+        parent::__construct($error['message'], $error['cod']);
 
-        $this->parameters = $error->getParameters();
+        $this->parameters = $error['parameters'] ?? null;
     }
 
     public function getParameters(): ?array
