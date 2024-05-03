@@ -2,11 +2,11 @@
 
 namespace ProgrammatorDev\OpenWeatherMap\UnitSystem;
 
-use ProgrammatorDev\OpenWeatherMap\Util\ClassConstantsTrait;
+use ProgrammatorDev\OpenWeatherMap\Util\ReflectionTrait;
 
 class UnitSystem
 {
-    use ClassConstantsTrait;
+    use ReflectionTrait;
 
     public const METRIC = 'metric';
     public const IMPERIAL = 'imperial';

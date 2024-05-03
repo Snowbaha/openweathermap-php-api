@@ -1,37 +1,36 @@
 <?php
 
-namespace ProgrammatorDev\OpenWeatherMap\Endpoint;
+namespace ProgrammatorDev\OpenWeatherMap\Resource;
 
-use Http\Client\Exception;
-use ProgrammatorDev\OpenWeatherMap\Endpoint\Util\ValidationTrait;
-use ProgrammatorDev\OpenWeatherMap\Entity\Geocoding\ZipCodeLocation;
+use ProgrammatorDev\Api\Method;
 use ProgrammatorDev\OpenWeatherMap\Entity\Location;
-use ProgrammatorDev\OpenWeatherMap\Exception\ApiErrorException;
-use ProgrammatorDev\OpenWeatherMap\Util\EntityListTrait;
-use ProgrammatorDev\YetAnotherPhpValidator\Exception\ValidationException;
+use ProgrammatorDev\OpenWeatherMap\OpenWeatherMap;
+use ProgrammatorDev\OpenWeatherMap\Resource\Util\ValidationTrait;
+use ProgrammatorDev\OpenWeatherMap\Util\EntityTrait;
+use ProgrammatorDev\Validator\Exception\ValidationException;
+use Psr\Http\Client\ClientExceptionInterface;
 
-class GeocodingEndpoint extends AbstractEndpoint
+class GeocodingResource
 {
+    use EntityTrait;
     use ValidationTrait;
-    use EntityListTrait;
 
     private const NUM_RESULTS = 5;
 
-    protected int $cacheTtl = 60 * 60 * 24 * 30; // 30 days
+    public function __construct(private readonly OpenWeatherMap $api) {}
 
     /**
      * @return Location[]
-     * @throws Exception
-     * @throws ApiErrorException
+     * @throws ClientExceptionInterface
      * @throws ValidationException
      */
     public function getByLocationName(string $locationName, int $numResults = self::NUM_RESULTS): array
     {
-        $this->validateSearchQuery($locationName, 'locationName');
-        $this->validateNumResults($numResults);
+        $this->validateQuery($locationName, 'locationName');
+        $this->validatePositive($numResults, 'numResults');
 
-        $data = $this->sendRequest(
-            method: 'GET',
+        $data = $this->api->request(
+            method: Method::GET,
             path: '/geo/1.0/direct',
             query: [
                 'q' => $locationName,
@@ -43,16 +42,15 @@ class GeocodingEndpoint extends AbstractEndpoint
     }
 
     /**
-     * @throws Exception
-     * @throws ApiErrorException
+     * @throws ClientExceptionInterface
      * @throws ValidationException
      */
-    public function getByZipCode(string $zipCode, string $countryCode): ZipCodeLocation
+    public function getByZipCode(string $zipCode, string $countryCode): Location
     {
-        $this->validateSearchQuery($zipCode, 'zipCode');
-        $this->validateCountryCode($countryCode);
+        $this->validateQuery($zipCode, 'zipCode');
+        $this->validateCountry($countryCode, 'countryCode');
 
-        $data = $this->sendRequest(
+        $data = $this->api->request(
             method: 'GET',
             path: '/geo/1.0/zip',
             query: [
@@ -60,22 +58,21 @@ class GeocodingEndpoint extends AbstractEndpoint
             ]
         );
 
-        return new ZipCodeLocation($data);
+        return new Location($data);
     }
 
     /**
      * @return Location[]
-     * @throws Exception
-     * @throws ApiErrorException
+     * @throws ClientExceptionInterface
      * @throws ValidationException
      */
     public function getByCoordinate(float $latitude, float $longitude, int $numResults = self::NUM_RESULTS): array
     {
         $this->validateCoordinate($latitude, $longitude);
-        $this->validateNumResults($numResults);
+        $this->validatePositive($numResults, 'numResults');
 
-        $data = $this->sendRequest(
-            method: 'GET',
+        $data = $this->api->request(
+            method: Method::GET,
             path: '/geo/1.0/reverse',
             query: [
                 'lat' => $latitude,

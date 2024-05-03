@@ -2,12 +2,12 @@
 
 namespace ProgrammatorDev\OpenWeatherMap\Util;
 
-trait ClassConstantsTrait
+trait ReflectionTrait
 {
     private function getClassConstants(string $className): array
     {
-        $reflection = new \ReflectionClass($className);
-        $constants = $reflection->getConstants();
+        $class = new \ReflectionClass($className);
+        $constants = $class->getConstants();
 
         // Sort by alphabetical order
         // to be more intuitive when listing values for error messages
