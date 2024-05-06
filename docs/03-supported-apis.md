@@ -14,8 +14,8 @@
     - [getHistory](#gethistory)
   - [Geocoding](#geocoding)
     - [getByLocationName](#getbylocationname)
-    - [getByZipCode](#getbyzipcode)
     - [getByCoordinate](#getbycoordinate)
+    - [getByZipCode](#getbyzipcode)
 - [Common Methods](#common-methods)
   - [withUnitSystem](#withunitsystem)
   - [withLanguage](#withlanguage)
@@ -33,7 +33,7 @@ getWeather(float $latitude, float $longitude): OneCall
 
 Get current and forecast (minutely, hourly and daily) weather data.
 
-Returns a [`OneCall`](05-objects.md#onecall) object:
+Returns a [`OneCall`](05-entities#onecall) object:
 
 ```php
 $weather = $openWeatherMap->oneCall()->getWeather(50, 50);
@@ -49,7 +49,7 @@ getHistoryMoment(float $latitude, float $longitude, \DateTimeInterface $dateTime
 
 Get weather data from a single moment in the past.
 
-Returns a [`WeatherLocation`](05-objects.md#weatherlocation) object:
+Returns a [`WeatherLocation`](05-entities#weatherlocation) object:
 
 ```php
 $weather = $openWeatherMap->oneCall()->getHistoryMoment(50, 50, new \DateTime('2023-01-01 12:00:00'));
@@ -65,7 +65,7 @@ getHistoryAggregate(float $latitude, float $longitude, \DateTimeInterface $date)
 
 Get aggregated weather data from a single day in the past.
 
-Returns a [`WeatherAggregate`](05-objects.md#weatheraggregate) object:
+Returns a [`WeatherAggregate`](05-entities#weatheraggregate) object:
 
 ```php
 $weather = $openWeatherMap->oneCall()->getHistoryAggregate(50, 50, new \DateTime('1985-07-19'));
@@ -83,7 +83,7 @@ getCurrent(float $latitude, float $longitude): WeatherLocation
 
 Get current weather data.
 
-Returns a [`WeatherLocation`](05-objects.md#weatherlocation-1) object:
+Returns a [`WeatherLocation`](05-entities#weatherlocation-1) object:
 
 ```php
 $weather = $openWeatherMap->weather()->getCurrent(50, 50);
@@ -99,7 +99,7 @@ getForecast(float $latitude, float $longitude, int $numResults = 40): WeatherLoc
 
 Get weather forecast data per 3-hour steps for the next 5 days.
 
-Returns a [`WeatherLocationList`](05-objects.md#weatherlocationlist) object:
+Returns a [`WeatherLocationList`](05-entities#weatherlocationlist) object:
 
 ```php
 // Since it returns 3-hour steps,
@@ -122,7 +122,7 @@ getCurrent(float $latitude, float $longitude): AirPollutionLocation
 
 Get current air pollution data.
 
-Returns a [`AirPollutionLocation`](05-objects.md#airpollutionlocation) object:
+Returns a [`AirPollutionLocation`](05-entities#airpollutionlocation) object:
 
 ```php
 $airPollution = $openWeatherMap->airPollution()->getCurrent(50, 50);
@@ -139,7 +139,7 @@ getForecast(float $latitude, float $longitude): AirPollutionLocationList
 
 Get air pollution forecast data per 1-hour for the next 24 hours.
 
-Returns a [`AirPollutionLocationList`](05-objects.md#airpollutionlocationlist) object:
+Returns a [`AirPollutionLocationList`](05-entities#airpollutionlocationlist) object:
 
 ```php
 $airPollutionForecast = $openWeatherMap->airPollution()->getForecast(50, 50);
@@ -159,7 +159,7 @@ getHistory(float $latitude, float $longitude, \DateTimeInterface $startDate, \Da
 
 Get air pollution history data between two dates.
 
-Returns a [`AirPollutionLocationList`](05-objects.md#airpollutionlocationlist) object:
+Returns a [`AirPollutionLocationList`](05-entities#airpollutionlocationlist) object:
 
 ```php
 $startDate = new \DateTime('-7 days'); // 7 days ago
@@ -177,6 +177,8 @@ foreach ($airPollutionHistory->getList() as $airPollution) {
 
 #### `getByLocationName`
 
+Get locations by location name. Returns an array of [`Location`](05-entities#location) entities:
+
 ```php
 /**
  * @return Location[]
@@ -184,36 +186,13 @@ foreach ($airPollutionHistory->getList() as $airPollution) {
 getByLocationName(string $locationName, int $numResults = 5): array
 ```
 
-Get locations data by location name.
-
-Returns an array of [`Location`](05-objects.md#location) objects:
-
 ```php
-$locations = $openWeatherMap->geocoding()->getByLocationName('lisbon');
-
-foreach ($locations as $location) {
-    echo $location->getName();
-    echo $location->getCountryCode();
-}
-```
-
-#### `getByZipCode`
-
-```php
-getByZipCode(string $zipCode, string $countryCode): ZipCodeLocation
-```
-
-Get location data by zip/post code.
-
-Returns a [`ZipCodeLocation`](05-objects.md#zipcodelocation) object:
-
-```php
-$location = $openWeatherMap->geocoding()->getByZipCode('1000-001', 'pt');
-
-echo $location->getName();
+$api->geocoding()->getByLocationName('lisbon');
 ```
 
 #### `getByCoordinate`
+
+Get locations by coordinate. Returns an array of [`Location`](05-entities#location) entities:
 
 ```php
 /**
@@ -222,17 +201,20 @@ echo $location->getName();
 getByCoordinate(float $latitude, float $longitude, int $numResults = 5): array
 ```
 
-Get locations data by coordinate.
+```php
+$api->geocoding()->getByCoordinate(50, 50);
+```
 
-Returns an array of [`Location`](05-objects.md#location) objects:
+#### `getByZipCode`
+
+Get location by zip code. Returns a [`Location`](05-entities#location) entity:
 
 ```php
-$locations = $openWeatherMap->geocoding()->getByCoordinate(50, 50);
+getByZipCode(string $zipCode, string $countryCode): Location
+```
 
-foreach ($locations as $location) {
-    echo $location->getName();
-    echo $location->getCountryCode();
-}
+```php
+$api->geocoding()->getByZipCode('1000-001', 'pt');
 ```
 
 ## Common Methods

@@ -2,40 +2,21 @@
 
 - [Default Configuration](#default-configuration)
 - [Options](#options)
-  - [applicationKey](#applicationkey)
   - [unitSystem](#unitsystem)
   - [language](#language)
-  - [httpClientBuilder](#httpclientbuilder)
-  - [cache](#cache)
-  - [logger](#logger)
-- [Config Object](#config-object)
 
 ## Default Configuration
 
-Only the `applicationKey` option is required:
-
 ```php
-use ProgrammatorDev\OpenWeatherMap\Config;
-use ProgrammatorDev\OpenWeatherMap\HttpClient\HttpClientBuilder;
 use ProgrammatorDev\OpenWeatherMap\OpenWeatherMap;
 
-$openWeatherMap = new OpenWeatherMap(
-    new Config([
-        'applicationKey' => 'yourappkey', // required
-        'unitSystem' => 'metric',
-        'language' => 'en',
-        'httpClientBuilder' => new HttpClientBuilder(),
-        'cache' => null,
-        'logger' => null
-    ])
-);
+$api = new OpenWeatherMap('yourapikey', [
+    'unitSystem' => 'metric',
+    'language' => 'en'
+]);
 ```
 
 ## Options
-
-### `applicationKey`
-
-Required for all requests. Check the [API Key](01-usage.md#api-key) section for more information.
 
 ### `unitSystem`
 
@@ -43,21 +24,16 @@ Unit system used when retrieving data.
 Affects temperature and speed values.
 
 Available options are `metric`, `imperial` and `standard`.
-Pre-defined [constants](../src/UnitSystem/UnitSystem.php) are also available.
 
 Example:
 
 ```php
-use ProgrammatorDev\OpenWeatherMap\Config;
 use ProgrammatorDev\OpenWeatherMap\UnitSystem\UnitSystem;
 use ProgrammatorDev\OpenWeatherMap\OpenWeatherMap;
 
-$openWeatherMap = new OpenWeatherMap(
-    new Config([
-        'applicationKey' => 'yourappkey',
-        'unitSystem' => UnitSystem::IMPERIAL
-    ])
-);
+$api = new OpenWeatherMap('yourapikey',
+    'unitSystem' => UnitSystem::IMPERIAL
+]);
 ```
 
 ### `language`
@@ -66,21 +42,16 @@ Language used when retrieving data.
 It seems to only affect weather conditions descriptions.
 
 List of all available languages can be found [here](https://openweathermap.org/api/one-call-3#multi).
-Pre-defined [constants](../src/Language/Language.php) are also available.
 
 Example:
 
 ```php
-use ProgrammatorDev\OpenWeatherMap\Config;
 use ProgrammatorDev\OpenWeatherMap\Language\Language;
 use ProgrammatorDev\OpenWeatherMap\OpenWeatherMap;
 
-$openWeatherMap = new OpenWeatherMap(
-    new Config([
-        'applicationKey' => 'yourappkey',
-        'language' => Language::PORTUGUESE
-    ])
-);
+$api = new OpenWeatherMap('yourapikey',
+    'language' => Language::PORTUGUESE
+]);
 ```
 
 ### `httpClientBuilder`
@@ -227,37 +198,3 @@ $openWeatherMap = new OpenWeatherMap(
 
 > **Note**
 > If a `cache` implementation is configured, cache events will also be logged.
-
-## Config Object
-
-Configuration getters and setters for all options are available to access and change after initialization:
-
-```php
-use ProgrammatorDev\OpenWeatherMap\Config;
-use ProgrammatorDev\OpenWeatherMap\OpenWeatherMap;
-
-$openWeatherMap = new OpenWeatherMap(
-    new Config([
-        'applicationKey' => 'yourappkey'
-    ])
-);
-
-// Using applicationKey as an example,
-// but getters and setters are available for all options
-$openWeatherMap->config()->getApplicationKey();
-$openWeatherMap->config()->setApplicationKey('newappkey');
-```
-
-Just take into account that any change will affect any subsequent request globally:
-
-```php
-// Using default 'metric' unit system
-$openWeatherMap->weather()->getCurrent(50, 50); 
-
-// Set new unit system
-$openWeatherMap->config()->setUnitSystem(UnitSystem::IMPERIAL);
-
-// Using 'imperial' unit system
-$openWeatherMap->weather()->getCurrent(50, 50);
-$openWeatherMap->weather()->getForecast(50, 50);
-```

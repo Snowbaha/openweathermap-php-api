@@ -16,8 +16,6 @@
   - [AirPollutionLocation](#airpollutionlocation)
   - [AirPollutionLocationList](#airpollutionlocationlist)
   - [AirQuality](#airquality)
-- [Geocoding](#geocoding)
-  - [ZipCodeLocation](#zipcodelocation)
 - [Common](#common)
   - [AtmosphericPressure](#atmosphericpressure)
   - [Coordinate](#coordinate)
@@ -199,15 +197,6 @@
 - `getIndex()`: `int`
 - `getQualitativeName()`: `string`
 
-## Geocoding
-
-### ZipCodeLocation
-
-- `getZipCode()`: `string`
-- `getName()`: `string`
-- `getCoordinate()`: [`Coordinate`](#coordinate)
-- `getCountryCode()`: `string`
-
 ## Common
 
 ### AtmosphericPressure
@@ -233,11 +222,8 @@
 - `getState()`: `?string`
 - `getCountryCode()`: `?string`
 - `getLocalNames()`: `?array`
-- `getPopulation()`: `?int`
+- `getLocalName(string $countryCode)`: `?string`
 - `getCoordinate()`: [`Coordinate`](#coordinate)
-- `getTimezone()`: [`?Timezone`](#timezone)
-- `getSunriseAt()`: `?\DateTimeImmutable`
-- `getSunsetAt()`: `?\DateTimeImmutable`
 
 ### MoonPhase
 
