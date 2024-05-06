@@ -217,12 +217,12 @@
 
 ### Location
 
-- `getId()`: `?int`
 - `getName()`: `?string`
 - `getState()`: `?string`
 - `getCountryCode()`: `?string`
 - `getLocalNames()`: `?array`
 - `getLocalName(string $countryCode)`: `?string`
+- `getZipCode()`: `?string`
 - `getCoordinate()`: [`Coordinate`](#coordinate)
 
 ### MoonPhase

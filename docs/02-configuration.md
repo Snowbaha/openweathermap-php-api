@@ -31,7 +31,7 @@ Example:
 use ProgrammatorDev\OpenWeatherMap\UnitSystem\UnitSystem;
 use ProgrammatorDev\OpenWeatherMap\OpenWeatherMap;
 
-$api = new OpenWeatherMap('yourapikey',
+$api = new OpenWeatherMap('yourapikey', [
     'unitSystem' => UnitSystem::IMPERIAL
 ]);
 ```
@@ -49,7 +49,7 @@ Example:
 use ProgrammatorDev\OpenWeatherMap\Language\Language;
 use ProgrammatorDev\OpenWeatherMap\OpenWeatherMap;
 
-$api = new OpenWeatherMap('yourapikey',
+$api = new OpenWeatherMap('yourapikey', [
     'language' => Language::PORTUGUESE
 ]);
 ```

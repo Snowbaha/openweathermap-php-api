@@ -47,7 +47,7 @@ echo $weather->getTemperature();
 - [Configuration](docs/02-configuration.md)
 - [Supported APIs](docs/03-supported-apis.md)
 - [Error Handling](docs/04-error-handling.md)
-- [Entities](docs/05-entities)
+- [Entities](docs/05-entities.md)
 
 ## Contributing
 

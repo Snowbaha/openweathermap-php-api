@@ -33,7 +33,7 @@ getWeather(float $latitude, float $longitude): OneCall
 
 Get current and forecast (minutely, hourly and daily) weather data.
 
-Returns a [`OneCall`](05-entities#onecall) object:
+Returns a [`OneCall`](05-entities.md#onecall) object:
 
 ```php
 $weather = $openWeatherMap->oneCall()->getWeather(50, 50);
@@ -49,7 +49,7 @@ getHistoryMoment(float $latitude, float $longitude, \DateTimeInterface $dateTime
 
 Get weather data from a single moment in the past.
 
-Returns a [`WeatherLocation`](05-entities#weatherlocation) object:
+Returns a [`WeatherLocation`](05-entities.md#weatherlocation) object:
 
 ```php
 $weather = $openWeatherMap->oneCall()->getHistoryMoment(50, 50, new \DateTime('2023-01-01 12:00:00'));
@@ -65,7 +65,7 @@ getHistoryAggregate(float $latitude, float $longitude, \DateTimeInterface $date)
 
 Get aggregated weather data from a single day in the past.
 
-Returns a [`WeatherAggregate`](05-entities#weatheraggregate) object:
+Returns a [`WeatherAggregate`](05-entities.md#weatheraggregate) object:
 
 ```php
 $weather = $openWeatherMap->oneCall()->getHistoryAggregate(50, 50, new \DateTime('1985-07-19'));
@@ -83,7 +83,7 @@ getCurrent(float $latitude, float $longitude): WeatherLocation
 
 Get current weather data.
 
-Returns a [`WeatherLocation`](05-entities#weatherlocation-1) object:
+Returns a [`WeatherLocation`](05-entities.md#weatherlocation-1) object:
 
 ```php
 $weather = $openWeatherMap->weather()->getCurrent(50, 50);
@@ -99,7 +99,7 @@ getForecast(float $latitude, float $longitude, int $numResults = 40): WeatherLoc
 
 Get weather forecast data per 3-hour steps for the next 5 days.
 
-Returns a [`WeatherLocationList`](05-entities#weatherlocationlist) object:
+Returns a [`WeatherLocationList`](05-entities.md#weatherlocationlist) object:
 
 ```php
 // Since it returns 3-hour steps,
@@ -122,7 +122,7 @@ getCurrent(float $latitude, float $longitude): AirPollutionLocation
 
 Get current air pollution data.
 
-Returns a [`AirPollutionLocation`](05-entities#airpollutionlocation) object:
+Returns a [`AirPollutionLocation`](05-entities.md#airpollutionlocation) object:
 
 ```php
 $airPollution = $openWeatherMap->airPollution()->getCurrent(50, 50);
@@ -139,7 +139,7 @@ getForecast(float $latitude, float $longitude): AirPollutionLocationList
 
 Get air pollution forecast data per 1-hour for the next 24 hours.
 
-Returns a [`AirPollutionLocationList`](05-entities#airpollutionlocationlist) object:
+Returns a [`AirPollutionLocationList`](05-entities.md#airpollutionlocationlist) object:
 
 ```php
 $airPollutionForecast = $openWeatherMap->airPollution()->getForecast(50, 50);
@@ -159,7 +159,7 @@ getHistory(float $latitude, float $longitude, \DateTimeInterface $startDate, \Da
 
 Get air pollution history data between two dates.
 
-Returns a [`AirPollutionLocationList`](05-entities#airpollutionlocationlist) object:
+Returns a [`AirPollutionLocationList`](05-entities.md#airpollutionlocationlist) object:
 
 ```php
 $startDate = new \DateTime('-7 days'); // 7 days ago
@@ -177,7 +177,7 @@ foreach ($airPollutionHistory->getList() as $airPollution) {
 
 #### `getByLocationName`
 
-Get locations by location name. Returns an array of [`Location`](05-entities#location) entities:
+Get locations by location name. Returns an array of [`Location`](05-entities.md#location) entities:
 
 ```php
 /**
@@ -192,7 +192,7 @@ $api->geocoding()->getByLocationName('lisbon');
 
 #### `getByCoordinate`
 
-Get locations by coordinate. Returns an array of [`Location`](05-entities#location) entities:
+Get locations by coordinate. Returns an array of [`Location`](05-entities.md#location) entities:
 
 ```php
 /**
@@ -207,7 +207,7 @@ $api->geocoding()->getByCoordinate(50, 50);
 
 #### `getByZipCode`
 
-Get location by zip code. Returns a [`Location`](05-entities#location) entity:
+Get location by zip code. Returns a [`Location`](05-entities.md#location) entity:
 
 ```php
 getByZipCode(string $zipCode, string $countryCode): Location
