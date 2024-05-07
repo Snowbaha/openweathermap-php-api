@@ -20,7 +20,7 @@ class OpenWeatherMap extends Api
     private array $options;
 
     public function __construct(
-        #[\SensitiveParameter] private readonly string $apiKey,
+        #[\SensitiveParameter] private string $apiKey,
         array $options = []
     )
     {

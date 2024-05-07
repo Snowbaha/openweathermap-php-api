@@ -23,7 +23,7 @@ try {
         $coordinate->getLongitude()
     );
 }
-// bad request to the api
+// bad request to the API
 catch (BadRequestException $exception) {
     echo $exception->getCode(); // 400
     echo $exception->getMessage();
@@ -39,7 +39,7 @@ catch (NotFoundException $exception) {
     echo $exception->getCode(); // 404
     echo $exception->getMessage();
 }
-// api key requests quota exceeded
+// API key requests quota exceeded
 catch (TooManyRequestsException $exception) {
     echo $exception->getCode(); // 429
     echo $exception->getMessage();
@@ -65,7 +65,7 @@ try {
         $coordinate->getLongitude()
     );
 }
-// catches all api response errors
+// catches all API response errors
 catch (ApiErrorException $exception) {
     echo $exception->getCode();
     echo $exception->getMessage();

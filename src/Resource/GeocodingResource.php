@@ -5,6 +5,7 @@ namespace ProgrammatorDev\OpenWeatherMap\Resource;
 use ProgrammatorDev\Api\Method;
 use ProgrammatorDev\OpenWeatherMap\Entity\Location;
 use ProgrammatorDev\OpenWeatherMap\OpenWeatherMap;
+use ProgrammatorDev\OpenWeatherMap\Resource\Util\CacheTrait;
 use ProgrammatorDev\OpenWeatherMap\Resource\Util\ValidationTrait;
 use ProgrammatorDev\OpenWeatherMap\Util\EntityTrait;
 use ProgrammatorDev\Validator\Exception\ValidationException;
@@ -12,12 +13,13 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class GeocodingResource
 {
+    use CacheTrait;
     use EntityTrait;
     use ValidationTrait;
 
     private const NUM_RESULTS = 5;
 
-    public function __construct(private readonly OpenWeatherMap $api) {}
+    public function __construct(private OpenWeatherMap $api) {}
 
     /**
      * @return Location[]
