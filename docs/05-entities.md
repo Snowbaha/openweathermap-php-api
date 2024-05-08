@@ -9,8 +9,8 @@
   - [WeatherLocation](#weatherlocation)
 - [Weather](#weather-1)
   - [Weather](#weather-2)
-  - [WeatherLocation](#weatherlocation-1)
-  - [WeatherLocationList](#weatherlocationlist)
+  - [WeatherCollection](#weathercollection)
+  - [WeatherData](#weatherdata)
 - [Air Pollution](#air-pollution)
   - [AirPollution](#airpollution)
   - [AirPollutionLocation](#airpollutionlocation)
@@ -19,17 +19,14 @@
 - [Geocoding](#geocoding)
   - [ZipLocation](#ziplocation)
 - [Common](#common)
-  - [AtmosphericPressure](#atmosphericpressure)
   - [Coordinate](#coordinate)
+  - [Condition](#condition)
   - [Icon](#icon)
   - [Location](#location)
   - [MoonPhase](#moonphase)
-  - [Rain](#rain)
-  - [Snow](#snow)
   - [Temperature](#temperature)
   - [Timezone](#timezone)
   - [Wind](#wind)
-  - [WeatherCondition](#weathercondition)
 
 ## One Call
 
@@ -121,24 +118,8 @@
 
 ### Weather
 
-- `getTemperature()`: `float`
-- `getTemperatureFeelsLike()`: `float`
-- `getMinTemperature()`: `float`
-- `getMaxTemperature()`: `float`
-- `getHumidity()`: `int`
-- `getCloudiness()`: `int`
-- `getVisibility()`: `int`
-- `getWeatherConditions()`: [`WeatherCondition[]`](#weathercondition)
-- `getWind()`: [`Wind`](#wind)
-- `getPrecipitationProbability()`: `?int`
-- `getRain()`: [`?Rain`](#rain)
-- `getSnow()`: [`?Snow`](#snow)
-- `getAtmosphericPressure()`: [`AtmosphericPressure`](#atmosphericpressure)
-- `getDateTime()`: `\DateTimeImmutable`
-
-### WeatherLocation
-
 - `getLocation()`: [`Location`](#location)
+- `getDateTime()`: `\DateTimeImmutable`
 - `getTemperature()`: `float`
 - `getTemperatureFeelsLike()`: `float`
 - `getMinTemperature()`: `float`
@@ -146,19 +127,35 @@
 - `getHumidity()`: `int`
 - `getCloudiness()`: `int`
 - `getVisibility()`: `int`
-- `getWeatherConditions()`: [`WeatherCondition[]`](#weathercondition)
+- `getAtmosphericPressure()`: `int`
+- `getConditions()`: [`Condition[]`](#condition)
 - `getWind()`: [`Wind`](#wind)
 - `getPrecipitationProbability()`: `?int`
-- `getRain()`: [`?Rain`](#rain)
-- `getSnow()`: [`?Snow`](#snow)
-- `getAtmosphericPressure()`: [`AtmosphericPressure`](#atmosphericpressure)
-- `getDateTime()`: `\DateTimeImmutable`
+- `getRainVolume()`: `?float`
+- `getSnowVolume()`: `?float`
 
-### WeatherLocationList
+### WeatherCollection
 
 - `getNumResults()`: `int`
 - `getLocation()`: [`Location`](#location)
-- `getList()`: [`Weather[]`](#weather-2)
+- `getData()`: [`WeatherData[]`](#weatherdata)
+
+### WeatherData
+
+- `getDateTime()`: `\DateTimeImmutable`
+- `getTemperature()`: `float`
+- `getTemperatureFeelsLike()`: `float`
+- `getMinTemperature()`: `float`
+- `getMaxTemperature()`: `float`
+- `getHumidity()`: `int`
+- `getCloudiness()`: `int`
+- `getVisibility()`: `int`
+- `getAtmosphericPressure()`: `int`
+- `getConditions()`: [`Condition[]`](#condition)
+- `getWind()`: [`Wind`](#wind)
+- `getPrecipitationProbability()`: `?int`
+- `getRainVolume()`: `?float`
+- `getSnowVolume()`: `?float`
 
 ## Air Pollution
 
@@ -210,21 +207,23 @@
 
 ## Common
 
-### AtmosphericPressure
-
-- `getPressure()`: `int`
-- `getSeaLevelPressure()`: `?int`
-- `getGroundLevelPressure()`: `?int`
-
 ### Coordinate
 
 - `getLatitude()`: `float`
 - `getLongitude()`: `float`
 
+### Condition
+
+- `getId()`: `int`
+- `getName()`: `string`
+- `getDescription()`: `string`
+- `getIcon()`: [`Icon`](#icon)
+- `getSystemName()`: `string`
+
 ### Icon
 
 - `getId()`: `string`
-- `getImageUrl()`: `string`
+- `getUrl()`: `string`
 
 ### Location
 
@@ -235,6 +234,7 @@
 - `getCountryCode()`: `?string`
 - `getLocalNames()`: `?array`
 - `getLocalName(string $countryCode)`: `?string`
+- `getPopulation()`: `?int`
 - `getTimezone()`: [`?Timezone`](#timezone)
 - `getSunriseAt()`: `?\DateTimeImmutable`
 - `getSunsetAt()`: `?\DateTimeImmutable`
@@ -244,16 +244,6 @@
 - `getValue()`: `float`
 - `getName()`: `string`
 - `getSysName()`: `string`
-
-### Rain
-
-- `getLastOneHourVolume()`: `?float`
-- `getLastThreeHoursVolume()`: `?float`
-
-### Snow
-
-- `getLastOneHourVolume()`: `?float`
-- `getLastThreeHoursVolume()`: `?float`
 
 ### Temperature
 
@@ -268,14 +258,6 @@
 
 - `getOffset()`: `int`
 - `getIdentifier()`: `?string`
-
-### WeatherCondition
-
-- `getId()`: `int`
-- `getName()`: `string`
-- `getDescription()`: `string`
-- `getIcon()`: [`Icon`](#icon)
-- `getSysName()`: `string`
 
 ### Wind
 

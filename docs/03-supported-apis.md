@@ -78,38 +78,31 @@ echo $weather->getTemperature();
 #### `getCurrent`
 
 ```php
-getCurrent(float $latitude, float $longitude): WeatherLocation
+getCurrent(float $latitude, float $longitude): Weather
 ```
 
 Get current weather data.
 
-Returns a [`WeatherLocation`](05-entities.md#weatherlocation-1) object:
+Returns a [`Weather`](05-entities.md#weather-2) object:
 
 ```php
-$weather = $openWeatherMap->weather()->getCurrent(50, 50);
-
-echo $weather->getTemperature();
+$currentWeather = $api->weather()->getCurrent(50, 50);
 ```
 
 #### `getForecast`
 
 ```php
-getForecast(float $latitude, float $longitude, int $numResults = 40): WeatherLocationList
+getForecast(float $latitude, float $longitude, int $numResults = 40): WeatherCollection
 ```
 
-Get weather forecast data per 3-hour steps for the next 5 days.
+Get weather forecast for the next 5 days in 3-hour steps.
 
-Returns a [`WeatherLocationList`](05-entities.md#weatherlocationlist) object:
+Returns a [`WeatherCollection`](05-entities.md#weathercollection) object:
 
 ```php
-// Since it returns 3-hour steps,
+// Since it returns data in 3-hour steps,
 // passing 8 as the numResults means it will return results for the next 24 hours
-$weatherForecast = $openWeatherMap->weather()->getForecast(50, 50, 8);
-
-foreach ($weatherForecast->getList() as $weather) {
-    echo $weather->getDateTime()->format('Y-m-d H:i:s');
-    echo $weather->getTemperature();
-}
+$weatherForecast = $api->weather()->getForecast(50, 50, 8);
 ```
 
 ### Air Pollution
