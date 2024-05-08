@@ -6,13 +6,26 @@ use ProgrammatorDev\OpenWeatherMap\Entity\Geocoding\ZipLocation;
 use ProgrammatorDev\OpenWeatherMap\Entity\Location;
 use ProgrammatorDev\OpenWeatherMap\Test\AbstractTest;
 use ProgrammatorDev\OpenWeatherMap\Test\MockResponse;
-use ProgrammatorDev\OpenWeatherMap\Test\Util\TestExceptionsTrait;
-use ProgrammatorDev\OpenWeatherMap\Test\Util\TestResponsesTrait;
+use ProgrammatorDev\OpenWeatherMap\Test\Util\TestCollectionResponseTrait;
+use ProgrammatorDev\OpenWeatherMap\Test\Util\TestValidationExceptionTrait;
+use ProgrammatorDev\OpenWeatherMap\Test\Util\TestItemResponseTrait;
 
 class GeocodingResourceTest extends AbstractTest
 {
-    use TestResponsesTrait;
-    use TestExceptionsTrait;
+    use TestItemResponseTrait;
+    use TestCollectionResponseTrait;
+    use TestValidationExceptionTrait;
+
+    public static function provideItemResponseData(): \Generator
+    {
+        yield 'get by zip code' => [
+            ZipLocation::class,
+            MockResponse::GEOCODING_ZIP,
+            'geocoding',
+            'getByZipCode',
+            ['1000-001', 'pt']
+        ];
+    }
 
     public static function provideCollectionResponseData(): \Generator
     {
@@ -29,17 +42,6 @@ class GeocodingResourceTest extends AbstractTest
             'geocoding',
             'getByCoordinate',
             [50, 50]
-        ];
-    }
-
-    public static function provideItemResponseData(): \Generator
-    {
-        yield 'get by zip code' => [
-            ZipLocation::class,
-            MockResponse::GEOCODING_ZIP,
-            'geocoding',
-            'getByZipCode',
-            ['1000-001', 'pt']
         ];
     }
 
