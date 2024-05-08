@@ -2,6 +2,7 @@
 
 namespace ProgrammatorDev\OpenWeatherMap\Test\Integration;
 
+use ProgrammatorDev\OpenWeatherMap\Entity\Geocoding\ZipLocation;
 use ProgrammatorDev\OpenWeatherMap\Entity\Location;
 use ProgrammatorDev\OpenWeatherMap\Test\AbstractTest;
 use ProgrammatorDev\OpenWeatherMap\Test\MockResponse;
@@ -34,7 +35,7 @@ class GeocodingResourceTest extends AbstractTest
     public static function provideItemResponseData(): \Generator
     {
         yield 'get by zip code' => [
-            Location::class,
+            ZipLocation::class,
             MockResponse::GEOCODING_ZIP,
             'geocoding',
             'getByZipCode',

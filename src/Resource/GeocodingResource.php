@@ -3,6 +3,7 @@
 namespace ProgrammatorDev\OpenWeatherMap\Resource;
 
 use ProgrammatorDev\Api\Method;
+use ProgrammatorDev\OpenWeatherMap\Entity\Geocoding\ZipLocation;
 use ProgrammatorDev\OpenWeatherMap\Entity\Location;
 use ProgrammatorDev\OpenWeatherMap\Resource\Util\ValidationTrait;
 use ProgrammatorDev\OpenWeatherMap\Util\EntityTrait;
@@ -42,7 +43,7 @@ class GeocodingResource extends Resource
      * @throws ClientExceptionInterface
      * @throws ValidationException
      */
-    public function getByZipCode(string $zipCode, string $countryCode): Location
+    public function getByZipCode(string $zipCode, string $countryCode): ZipLocation
     {
         $this->validateQuery($zipCode, 'zipCode');
         $this->validateCountry($countryCode, 'countryCode');
@@ -55,7 +56,7 @@ class GeocodingResource extends Resource
             ]
         );
 
-        return new Location($data);
+        return new ZipLocation($data);
     }
 
     /**

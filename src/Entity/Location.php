@@ -4,6 +4,10 @@ namespace ProgrammatorDev\OpenWeatherMap\Entity;
 
 class Location
 {
+    private Coordinate $coordinate;
+
+    private ?int $id;
+
     private ?string $name;
 
     private ?string $state;
@@ -12,18 +16,46 @@ class Location
 
     private ?array $localNames;
 
-    private ?string $zipCode;
+    private ?Timezone $timezone;
 
-    private Coordinate $coordinate;
+    private ?\DateTimeImmutable $sunriseAt;
+
+    private ?\DateTimeImmutable $sunsetAt;
 
     public function __construct(array $data)
     {
+        $this->coordinate = new Coordinate([
+            'lat' => $data['lat'],
+            'lon' => $data['lon']
+        ]);
+
+        $this->id = $data['id'] ?? null;
         $this->name = $data['name'] ?? null;
         $this->state = $data['state'] ?? null;
         $this->countryCode = $data['country'] ?? null;
         $this->localNames = $data['local_names'] ?? null;
-        $this->zipCode = $data['zip'] ?? null;
-        $this->coordinate = new Coordinate(['lat' => $data['lat'], 'lon' => $data['lon']]);
+
+        $this->timezone = isset($data['timezone_offset'])
+            ? new Timezone(['timezone_offset' => $data['timezone_offset']])
+            : null;
+
+        $this->sunriseAt = isset($data['sunrise'])
+            ? \DateTimeImmutable::createFromFormat('U', $data['sunrise'])
+            : null;
+
+        $this->sunsetAt = isset($data['sunset'])
+            ? \DateTimeImmutable::createFromFormat('U', $data['sunset'])
+            : null;
+    }
+
+    public function getCoordinate(): Coordinate
+    {
+        return $this->coordinate;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getName(): ?string
@@ -53,13 +85,18 @@ class Location
         return $this->localNames[$countryCode] ?? null;
     }
 
-    public function getZipCode(): ?string
+    public function getTimezone(): ?Timezone
     {
-        return $this->zipCode;
+        return $this->timezone;
     }
 
-    public function getCoordinate(): Coordinate
+    public function getSunriseAt(): ?\DateTimeImmutable
     {
-        return $this->coordinate;
+        return $this->sunriseAt;
+    }
+
+    public function getSunsetAt(): ?\DateTimeImmutable
+    {
+        return $this->sunsetAt;
     }
 }

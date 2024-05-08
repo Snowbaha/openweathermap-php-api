@@ -177,8 +177,6 @@ foreach ($airPollutionHistory->getList() as $airPollution) {
 
 #### `getByLocationName`
 
-Get locations by location name. Returns an array of [`Location`](05-entities.md#location) entities:
-
 ```php
 /**
  * @return Location[]
@@ -186,13 +184,15 @@ Get locations by location name. Returns an array of [`Location`](05-entities.md#
 getByLocationName(string $locationName, int $numResults = 5): array
 ```
 
+Get locations by location name. 
+
+Returns an array of [`Location`](05-entities.md#location) entities.
+
 ```php
-$api->geocoding()->getByLocationName('lisbon');
+$locations = $api->geocoding()->getByLocationName('lisbon');
 ```
 
 #### `getByCoordinate`
-
-Get locations by coordinate. Returns an array of [`Location`](05-entities.md#location) entities:
 
 ```php
 /**
@@ -201,20 +201,26 @@ Get locations by coordinate. Returns an array of [`Location`](05-entities.md#loc
 getByCoordinate(float $latitude, float $longitude, int $numResults = 5): array
 ```
 
+Get locations by coordinate. 
+
+Returns an array of [`Location`](05-entities.md#location) entities.
+
 ```php
-$api->geocoding()->getByCoordinate(50, 50);
+$locations = $api->geocoding()->getByCoordinate(50, 50);
 ```
 
 #### `getByZipCode`
 
-Get location by zip code. Returns a [`Location`](05-entities.md#location) entity:
-
 ```php
-getByZipCode(string $zipCode, string $countryCode): Location
+getByZipCode(string $zipCode, string $countryCode): ZipLocation
 ```
 
+Get location by zip code. 
+
+Returns a [`ZipLocation`](05-entities.md#ziplocation) entity.
+
 ```php
-$api->geocoding()->getByZipCode('1000-001', 'pt');
+$location = $api->geocoding()->getByZipCode('1000-001', 'pt');
 ```
 
 ## Common Methods
@@ -260,25 +266,25 @@ $openWeatherMap->weather()
 #### `withCacheTtl`
 
 ```php
-withCacheTtl(int $seconds): self
+withCacheTtl(?int $ttl): self
 ```
 
 Makes a request and saves into cache for the provided duration in seconds. 
 
-If `0` seconds is provided, the request will not be cached.
+Semantics of values:
+- `0`, the response will not be cached (if the servers specifies no `max-age`).
+- `null`, the response will be cached for as long as it can (forever).
 
-> **Note**
-> Setting cache to `0` seconds will **not** invalidate any existing cache.
+> [!NOTE]
+> Setting cache to `null` or `0` seconds will **not** invalidate any existing cache.
 
-Check the [Cache TTL](02-configuration.md#cache-ttl) section for more information regarding default values.
+[//]: # (Check the [Cache TTL]&#40;02-configuration.md#cache-ttl&#41; section for more information regarding default values.)
 
-Available for all APIs if `cache` is enabled in the [configuration](02-configuration.md#cache).
+[//]: # (Available for all APIs if `cache` is enabled in the [configuration]&#40;02-configuration.md#cache&#41;.)
 
 ```php
-use ProgrammatorDev\OpenWeatherMap\Language\Language
-
-// Cache will be saved for 1 hour for this request alone
-$openWeatherMap->weather()
+// cache will be saved for 1 hour for this request alone
+$api->weather()
     ->withCacheTtl(3600)
     ->getCurrent(50, 50);
 ```

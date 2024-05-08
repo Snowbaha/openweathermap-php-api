@@ -4,23 +4,23 @@ namespace ProgrammatorDev\OpenWeatherMap\Entity;
 
 class Timezone
 {
-    private ?string $identifier;
-
     private int $offset;
+
+    private ?string $identifier;
 
     public function __construct(array $data)
     {
-        $this->identifier = $data['timezone'] ?? null;
         $this->offset = $data['timezone_offset'];
-    }
-
-    public function getIdentifier(): ?string
-    {
-        return $this->identifier;
+        $this->identifier = $data['timezone'] ?? null;
     }
 
     public function getOffset(): int
     {
         return $this->offset;
+    }
+
+    public function getIdentifier(): ?string
+    {
+        return $this->identifier;
     }
 }
