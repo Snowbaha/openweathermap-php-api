@@ -19,8 +19,8 @@ class GeocodingResource extends Resource
 
     /**
      * @return Location[]
-     * @throws ClientExceptionInterface
      * @throws ValidationException
+     * @throws ClientExceptionInterface
      */
     public function getByLocationName(string $locationName, int $numResults = self::NUM_RESULTS): array
     {
@@ -40,8 +40,8 @@ class GeocodingResource extends Resource
     }
 
     /**
-     * @throws ClientExceptionInterface
      * @throws ValidationException
+     * @throws ClientExceptionInterface
      */
     public function getByZipCode(string $zipCode, string $countryCode): ZipLocation
     {
@@ -61,8 +61,8 @@ class GeocodingResource extends Resource
 
     /**
      * @return Location[]
-     * @throws ClientExceptionInterface
      * @throws ValidationException
+     * @throws ClientExceptionInterface
      */
     public function getByCoordinate(float $latitude, float $longitude, int $numResults = self::NUM_RESULTS): array
     {

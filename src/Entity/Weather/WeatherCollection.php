@@ -3,34 +3,36 @@
 namespace ProgrammatorDev\OpenWeatherMap\Entity\Weather;
 
 use ProgrammatorDev\OpenWeatherMap\Entity\Location;
-use ProgrammatorDev\OpenWeatherMap\Util\EntityListTrait;
+use ProgrammatorDev\OpenWeatherMap\Util\EntityTrait;
 
-class WeatherLocationList
+class WeatherCollection
 {
-    use EntityListTrait;
+    use EntityTrait;
 
     private int $numResults;
 
     private Location $location;
 
-    /** @var Weather[] */
-    private array $list;
+    /** @var WeatherData[] */
+    private array $data;
 
     public function __construct(array $data)
     {
         $this->numResults = $data['cnt'];
+
         $this->location = new Location([
-            'id' => $data['city']['id'],
-            'name' => $data['city']['name'],
-            'country' => $data['city']['country'],
-            'population' => $data['city']['population'],
             'lat' => $data['city']['coord']['lat'],
             'lon' => $data['city']['coord']['lon'],
+            'id' => $data['city']['id'] ?? null,
+            'name' => $data['city']['name'] ?? null,
+            'country' => $data['city']['country'] ?? null,
+            'population' => $data['city']['population'] ?? null,
             'sunrise' => $data['city']['sunrise'],
             'sunset' => $data['city']['sunset'],
             'timezone_offset' => $data['city']['timezone']
         ]);
-        $this->list = $this->createEntityList(Weather::class, $data['list']);
+
+        $this->data = $this->createEntityList(WeatherData::class, $data['list']);
     }
 
     public function getNumResults(): int
@@ -43,8 +45,8 @@ class WeatherLocationList
         return $this->location;
     }
 
-    public function getList(): array
+    public function getData(): array
     {
-        return $this->list;
+        return $this->data;
     }
 }

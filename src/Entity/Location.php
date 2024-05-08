@@ -16,6 +16,8 @@ class Location
 
     private ?array $localNames;
 
+    private ?int $population;
+
     private ?Timezone $timezone;
 
     private ?\DateTimeImmutable $sunriseAt;
@@ -29,11 +31,29 @@ class Location
             'lon' => $data['lon']
         ]);
 
-        $this->id = $data['id'] ?? null;
-        $this->name = $data['name'] ?? null;
+        // set no null if it is 0
+        $this->id = !empty($data['id'])
+            ? $data['id']
+            : null;
+
+        // set to null if it is an empty string
+        $this->name = !empty($data['name'])
+            ? $data['name']
+            : null;
+
         $this->state = $data['state'] ?? null;
-        $this->countryCode = $data['country'] ?? null;
+
+        // set to null if it is an empty string
+        $this->countryCode = !empty($data['country'])
+            ? $data['country']
+            : null;
+
         $this->localNames = $data['local_names'] ?? null;
+
+        // set to null if it is 0
+        $this->population = !empty($data['population'])
+            ? $data['population']
+            : null;
 
         $this->timezone = isset($data['timezone_offset'])
             ? new Timezone(['timezone_offset' => $data['timezone_offset']])
@@ -83,6 +103,11 @@ class Location
         $countryCode = strtolower($countryCode);
 
         return $this->localNames[$countryCode] ?? null;
+    }
+
+    public function getPopulation(): ?int
+    {
+        return $this->population;
     }
 
     public function getTimezone(): ?Timezone
