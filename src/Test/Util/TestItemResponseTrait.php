@@ -24,4 +24,6 @@ trait TestItemResponseTrait
         $response = $this->api->$resource()->$method(...$args);
         $this->assertInstanceOf($responseClass, $response);
     }
+
+    abstract public static function provideItemResponseData(): \Generator;
 }

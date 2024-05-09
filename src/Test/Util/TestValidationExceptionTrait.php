@@ -13,4 +13,6 @@ trait TestValidationExceptionTrait
         $this->expectException(ValidationException::class);
         $this->api->$resource()->$method(...$args);
     }
+
+    abstract public static function provideValidationExceptionData(): \Generator;
 }

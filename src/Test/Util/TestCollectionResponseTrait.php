@@ -24,4 +24,6 @@ trait TestCollectionResponseTrait
         $response = $this->api->$resource()->$method(...$args);
         $this->assertContainsOnlyInstancesOf($responseClass, $response);
     }
+
+    abstract public static function provideCollectionResponseData(): \Generator;
 }
