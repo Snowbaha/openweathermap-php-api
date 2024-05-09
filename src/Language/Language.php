@@ -55,7 +55,7 @@ class Language
     public const VIETNAMESE = 'vi';
     public const ZULU = 'zu';
 
-    public static function getList(): array
+    public static function getOptions(): array
     {
         return (new Language)->getClassConstants(self::class);
     }

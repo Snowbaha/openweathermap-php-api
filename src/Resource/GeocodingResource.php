@@ -46,7 +46,7 @@ class GeocodingResource extends Resource
     public function getByZipCode(string $zipCode, string $countryCode): ZipLocation
     {
         $this->validateQuery($zipCode, 'zipCode');
-        $this->validateCountry($countryCode, 'countryCode');
+        $this->validateCountryCode($countryCode);
 
         $data = $this->api->request(
             method: 'GET',

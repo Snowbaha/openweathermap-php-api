@@ -64,8 +64,8 @@ class OpenWeatherMap extends Api
         $this->optionsResolver->setAllowedTypes('unitSystem', 'string');
         $this->optionsResolver->setAllowedTypes('language', 'string');
 
-        $this->optionsResolver->setAllowedValues('unitSystem', UnitSystem::getList());
-        $this->optionsResolver->setAllowedValues('language', Language::getList());
+        $this->optionsResolver->setAllowedValues('unitSystem', UnitSystem::getOptions());
+        $this->optionsResolver->setAllowedValues('language', Language::getOptions());
 
         return $this->optionsResolver->resolve($options);
     }

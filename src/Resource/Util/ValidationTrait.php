@@ -2,6 +2,8 @@
 
 namespace ProgrammatorDev\OpenWeatherMap\Resource\Util;
 
+use ProgrammatorDev\OpenWeatherMap\Language\Language;
+use ProgrammatorDev\OpenWeatherMap\UnitSystem\UnitSystem;
 use ProgrammatorDev\Validator\Exception\ValidationException;
 use ProgrammatorDev\Validator\Validator;
 
@@ -35,8 +37,24 @@ trait ValidationTrait
     /**
      * @throws ValidationException
      */
-    private function validateCountry(string $countryCode, string $name): void
+    private function validateCountryCode(string $countryCode): void
     {
-        Validator::country()->assert($countryCode, $name);
+        Validator::country()->assert($countryCode, 'countryCode');
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    private function validateLanguage(string $language): void
+    {
+        Validator::choice(Language::getOptions())->assert($language, 'language');
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    private function validateUnitSystem(string $unitSystem): void
+    {
+        Validator::choice(UnitSystem::getOptions())->assert($unitSystem, 'unitSystem');
     }
 }

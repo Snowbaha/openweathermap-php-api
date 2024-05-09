@@ -12,7 +12,7 @@ class UnitSystem
     public const IMPERIAL = 'imperial';
     public const STANDARD = 'standard';
 
-    public static function getList(): array
+    public static function getOptions(): array
     {
         return (new UnitSystem)->getClassConstants(self::class);
     }
