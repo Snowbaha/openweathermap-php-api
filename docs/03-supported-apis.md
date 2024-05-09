@@ -110,60 +110,47 @@ $weatherForecast = $api->weather()->getForecast(50, 50, 8);
 #### `getCurrent`
 
 ```php
-getCurrent(float $latitude, float $longitude): AirPollutionLocation
+getCurrent(float $latitude, float $longitude): AirPollution
 ```
 
 Get current air pollution data.
 
-Returns a [`AirPollutionLocation`](05-entities.md#airpollutionlocation) object:
+Returns a [`AirPollution`](05-entities.md#airpollution) object:
 
 ```php
-$airPollution = $openWeatherMap->airPollution()->getCurrent(50, 50);
-
-echo $airPollution->getAirQuality()->getQualitativeName();
-echo $airPollution->getCarbonMonoxide();
+$currentAirPollution = $api->airPollution()->getCurrent(50, 50);
 ```
 
 #### `getForecast`
 
 ```php
-getForecast(float $latitude, float $longitude): AirPollutionLocationList
+getForecast(float $latitude, float $longitude): AirPollutionCollection
 ```
 
-Get air pollution forecast data per 1-hour for the next 24 hours.
+Get air pollution forecast data per hour.
 
-Returns a [`AirPollutionLocationList`](05-entities.md#airpollutionlocationlist) object:
+Returns a [`AirPollutionCollection`](05-entities.md#airpollutioncollection) object:
 
 ```php
-$airPollutionForecast = $openWeatherMap->airPollution()->getForecast(50, 50);
-
-foreach ($airPollutionForecast->getList() as $airPollution) {
-    echo $airPollution->getDateTime()->format('Y-m-d H:i:s');
-    echo $airPollution->getAirQuality()->getQualitativeName();
-    echo $airPollution->getCarbonMonoxide();
-}
+$airPollutionForecast = $api->airPollution()->getForecast(50, 50);
 ```
 
 #### `getHistory`
 
 ```php
-getHistory(float $latitude, float $longitude, \DateTimeInterface $startDate, \DateTimeInterface $endDate): AirPollutionLocationList
+getHistory(float $latitude, float $longitude, \DateTimeInterface $startDate, \DateTimeInterface $endDate): AirPollutionCollection
 ```
 
-Get air pollution history data between two dates.
+Get air pollution history data per hour between two dates.
 
-Returns a [`AirPollutionLocationList`](05-entities.md#airpollutionlocationlist) object:
+Returns a [`AirPollutionCollection`](05-entities.md#airpollutioncollection) object:
 
 ```php
-$startDate = new \DateTime('-7 days'); // 7 days ago
-$endDate = new \DateTime('-6 days'); // 6 days ago
-$airPollutionHistory = $openWeatherMap->airPollution()->getHistory(50, 50, $startDate, $endDate);
+$startDate = new \DateTime('-1 day');
+$endDate = new \DateTime('now');
 
-foreach ($airPollutionHistory->getList() as $airPollution) {
-    echo $airPollution->getDateTime()->format('Y-m-d H:i:s');
-    echo $airPollution->getAirQuality()->getQualitativeName();
-    echo $airPollution->getCarbonMonoxide();
-}
+// returns air pollution data for the last 24 hours
+$airPollutionHistory = $api->airPollution()->getHistory(50, 50, $startDate, $endDate);
 ```
 
 ### Geocoding
@@ -210,7 +197,7 @@ getByZipCode(string $zipCode, string $countryCode): ZipLocation
 
 Get location by zip code. 
 
-Returns a [`ZipLocation`](05-entities.md#ziplocation) entity.
+Returns a [`ZipLocation`](05-entities.md#ziplocation) object.
 
 ```php
 $location = $api->geocoding()->getByZipCode('1000-001', 'pt');
