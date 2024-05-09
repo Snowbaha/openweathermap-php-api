@@ -12,6 +12,7 @@ use ProgrammatorDev\OpenWeatherMap\Exception\TooManyRequestsException;
 use ProgrammatorDev\OpenWeatherMap\Exception\UnauthorizedException;
 use ProgrammatorDev\OpenWeatherMap\Exception\UnexpectedErrorException;
 use ProgrammatorDev\OpenWeatherMap\Language\Language;
+use ProgrammatorDev\OpenWeatherMap\Resource\AirPollutionResource;
 use ProgrammatorDev\OpenWeatherMap\Resource\GeocodingResource;
 use ProgrammatorDev\OpenWeatherMap\Resource\WeatherResource;
 use ProgrammatorDev\OpenWeatherMap\UnitSystem\UnitSystem;
@@ -36,6 +37,11 @@ class OpenWeatherMap extends Api
         return new WeatherResource($this);
     }
 
+    public function airPollution(): AirPollutionResource
+    {
+        return new AirPollutionResource($this);
+    }
+
     public function geocoding(): GeocodingResource
     {
         return new GeocodingResource($this);
@@ -49,11 +55,6 @@ class OpenWeatherMap extends Api
 //    public function oneCall(): OneCallEndpoint
 //    {
 //        return new OneCallEndpoint($this);
-//    }
-//
-//    public function airPollution(): AirPollutionEndpoint
-//    {
-//        return new AirPollutionEndpoint($this);
 //    }
 
     private function configureOptions(array $options): array

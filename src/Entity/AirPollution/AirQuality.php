@@ -2,12 +2,8 @@
 
 namespace ProgrammatorDev\OpenWeatherMap\Entity\AirPollution;
 
-use ProgrammatorDev\OpenWeatherMap\Entity\AirPollution\Util\AirQualityQualitativeNameTrait;
-
 class AirQuality
 {
-    use AirQualityQualitativeNameTrait;
-
     private int $index;
 
     private string $qualitativeName;
@@ -15,7 +11,7 @@ class AirQuality
     public function __construct(array $data)
     {
         $this->index = $data['aqi'];
-        $this->qualitativeName = $this->getAirQualityQualitativeName($this->index);
+        $this->qualitativeName = $this->findQualitativeName($this->index);
     }
 
     public function getIndex(): int
@@ -26,5 +22,18 @@ class AirQuality
     public function getQualitativeName(): string
     {
         return $this->qualitativeName;
+    }
+
+    private function findQualitativeName(int $index): string
+    {
+        // levels based on https://openweathermap.org/api/air-pollution
+        return match ($index) {
+            0 => 'Undefined',
+            1 => 'Good',
+            2 => 'Fair',
+            3 => 'Moderate',
+            4 => 'Poor',
+            5 => 'Very Poor'
+        };
     }
 }

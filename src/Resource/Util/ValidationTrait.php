@@ -57,4 +57,15 @@ trait ValidationTrait
     {
         Validator::choice(UnitSystem::getOptions())->assert($unitSystem, 'unitSystem');
     }
+
+    /**
+     * @throws ValidationException
+     */
+    private function validateDateOrder(\DateTimeInterface $startDate, \DateTimeInterface $endDate): void
+    {
+        Validator::greaterThan(
+            constraint: $startDate,
+            message: 'The endDate must be after the startDate.'
+        )->assert($endDate);
+    }
 }
