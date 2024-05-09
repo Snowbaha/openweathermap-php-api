@@ -5,14 +5,11 @@ namespace ProgrammatorDev\OpenWeatherMap\Resource;
 use ProgrammatorDev\Api\Method;
 use ProgrammatorDev\OpenWeatherMap\Entity\AirPollution\AirPollution;
 use ProgrammatorDev\OpenWeatherMap\Entity\AirPollution\AirPollutionCollection;
-use ProgrammatorDev\OpenWeatherMap\Resource\Util\ValidationTrait;
 use ProgrammatorDev\Validator\Exception\ValidationException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class AirPollutionResource extends Resource
 {
-    use ValidationTrait;
-
     /**
      * @throws ValidationException
      * @throws ClientExceptionInterface

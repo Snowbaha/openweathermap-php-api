@@ -7,7 +7,6 @@ use ProgrammatorDev\OpenWeatherMap\Entity\Weather\Weather;
 use ProgrammatorDev\OpenWeatherMap\Entity\Weather\WeatherCollection;
 use ProgrammatorDev\OpenWeatherMap\Resource\Util\LanguageTrait;
 use ProgrammatorDev\OpenWeatherMap\Resource\Util\UnitSystemTrait;
-use ProgrammatorDev\OpenWeatherMap\Resource\Util\ValidationTrait;
 use ProgrammatorDev\Validator\Exception\ValidationException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -15,7 +14,6 @@ class WeatherResource extends Resource
 {
     use LanguageTrait;
     use UnitSystemTrait;
-    use ValidationTrait;
 
     private const NUM_RESULTS = 40;
 

@@ -12,7 +12,7 @@ trait ValidationTrait
     /**
      * @throws ValidationException
      */
-    private function validateQuery(string $query, string $name): void
+    protected function validateQuery(string $query, string $name): void
     {
         Validator::notBlank()->assert($query, $name);
     }
@@ -20,7 +20,7 @@ trait ValidationTrait
     /**
      * @throws ValidationException
      */
-    private function validatePositive(int $number, string $name): void
+    protected function validatePositive(int $number, string $name): void
     {
         Validator::greaterThan(0)->assert($number, $name);
     }
@@ -28,7 +28,7 @@ trait ValidationTrait
     /**
      * @throws ValidationException
      */
-    private function validateCoordinate(float $latitude, float $longitude): void
+    protected function validateCoordinate(float $latitude, float $longitude): void
     {
         Validator::range(-90, 90)->assert($latitude, 'latitude');
         Validator::range(-180, 180)->assert($longitude, 'longitude');
@@ -37,7 +37,7 @@ trait ValidationTrait
     /**
      * @throws ValidationException
      */
-    private function validateCountryCode(string $countryCode): void
+    protected function validateCountryCode(string $countryCode): void
     {
         Validator::country()->assert($countryCode, 'countryCode');
     }
@@ -45,7 +45,7 @@ trait ValidationTrait
     /**
      * @throws ValidationException
      */
-    private function validateLanguage(string $language): void
+    protected function validateLanguage(string $language): void
     {
         Validator::choice(Language::getOptions())->assert($language, 'language');
     }
@@ -53,7 +53,7 @@ trait ValidationTrait
     /**
      * @throws ValidationException
      */
-    private function validateUnitSystem(string $unitSystem): void
+    protected function validateUnitSystem(string $unitSystem): void
     {
         Validator::choice(UnitSystem::getOptions())->assert($unitSystem, 'unitSystem');
     }
@@ -61,7 +61,7 @@ trait ValidationTrait
     /**
      * @throws ValidationException
      */
-    private function validateDateOrder(\DateTimeInterface $startDate, \DateTimeInterface $endDate): void
+    protected function validateDateOrder(\DateTimeInterface $startDate, \DateTimeInterface $endDate): void
     {
         Validator::greaterThan(
             constraint: $startDate,

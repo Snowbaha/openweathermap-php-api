@@ -5,7 +5,6 @@ namespace ProgrammatorDev\OpenWeatherMap\Resource;
 use ProgrammatorDev\Api\Method;
 use ProgrammatorDev\OpenWeatherMap\Entity\Geocoding\ZipLocation;
 use ProgrammatorDev\OpenWeatherMap\Entity\Location;
-use ProgrammatorDev\OpenWeatherMap\Resource\Util\ValidationTrait;
 use ProgrammatorDev\OpenWeatherMap\Util\EntityTrait;
 use ProgrammatorDev\Validator\Exception\ValidationException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -13,7 +12,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 class GeocodingResource extends Resource
 {
     use EntityTrait;
-    use ValidationTrait;
 
     private const NUM_RESULTS = 5;
 
