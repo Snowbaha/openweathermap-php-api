@@ -36,6 +36,7 @@ class AirPollutionCollectionTest extends AbstractTest
             ]
         ]);
 
+        $this->assertSame(1, $entity->getNumResults());
         $this->assertInstanceOf(Coordinate::class, $entity->getCoordinate());
         $this->assertContainsOnlyInstancesOf(AirPollutionData::class, $entity->getData());
     }

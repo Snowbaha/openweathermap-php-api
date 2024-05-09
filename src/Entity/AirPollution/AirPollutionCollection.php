@@ -9,6 +9,8 @@ class AirPollutionCollection
 {
     use EntityTrait;
 
+    private int $numResults;
+
     private Coordinate $coordinate;
 
     /** @var AirPollutionData[] */
@@ -16,8 +18,14 @@ class AirPollutionCollection
 
     public function __construct(array $data)
     {
+        $this->numResults = \count($data['list']);
         $this->coordinate = new Coordinate($data['coord']);
         $this->data = $this->createEntityList(AirPollutionData::class, $data['list']);
+    }
+
+    public function getNumResults(): int
+    {
+        return $this->numResults;
     }
 
     public function getCoordinate(): Coordinate
