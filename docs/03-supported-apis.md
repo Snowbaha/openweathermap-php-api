@@ -218,41 +218,39 @@ $location = $api->geocoding()->getByZipCode('1000-001', 'pt');
 
 ## Common Methods
 
-#### `withUnitSystem`
-
-```php
-withUnitSystem(string $unitSystem): self
-```
-
-Makes a request with a different unit system from the one globally defined in the [configuration](02-configuration.md#unitsystem).
-
-Only available for [`OneCall`](#one-call) and [`Weather`](#weather) APIs.
-
-```php
-use ProgrammatorDev\OpenWeatherMap\UnitSystem\UnitSystem;
-
-// Uses 'imperial' unit system for this request alone
-$openWeatherMap->weather()
-    ->withUnitSystem(UnitSystem::IMPERIAL)
-    ->getCurrent(50, 50);
-```
-
 #### `withLanguage`
 
 ```php
 withLanguage(string $language): self
 ```
 
-Makes a request with a different language from the one globally defined in the [configuration](02-configuration.md#language).
-
-Only available for [`OneCall`](#one-call) and [`Weather`](#weather) APIs.
+Set the language per request. 
+Only available for [`OneCall`](#one-call) and [`Weather`](#weather) API requests.
 
 ```php
 use ProgrammatorDev\OpenWeatherMap\Language\Language
 
-// Uses 'pt' language for this request alone
-$openWeatherMap->weather()
+// uses the "pt" language for this request alone
+$api->weather()
     ->withLanguage(Language::PORTUGUESE)
+    ->getCurrent(50, 50);
+```
+
+#### `withUnitSystem`
+
+```php
+withUnitSystem(string $unitSystem): self
+```
+
+Set the unit system per request.
+Only available for [`OneCall`](#one-call) and [`Weather`](#weather) API requests.
+
+```php
+use ProgrammatorDev\OpenWeatherMap\UnitSystem\UnitSystem;
+
+// uses the "imperial" unit system for this request alone
+$api->weather()
+    ->withUnitSystem(UnitSystem::IMPERIAL)
     ->getCurrent(50, 50);
 ```
 
