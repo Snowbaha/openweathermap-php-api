@@ -1,6 +1,6 @@
 <?php
 
-namespace ProgrammatorDev\OpenWeatherMap\Entity;
+namespace ProgrammatorDev\OpenWeatherMap\Entity\OneCall;
 
 class Temperature
 {

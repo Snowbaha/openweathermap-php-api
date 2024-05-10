@@ -1,4 +1,4 @@
-# Objects
+# Entities
 
 - [One Call](#one-call)
   - [Alert](#alert)

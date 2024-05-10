@@ -2,7 +2,7 @@
 
 namespace ProgrammatorDev\OpenWeatherMap\Entity\OneCall;
 
-class MinuteForecast
+class MinuteData
 {
     private \DateTimeImmutable $dateTime;
 
@@ -10,7 +10,7 @@ class MinuteForecast
 
     public function __construct(array $data)
     {
-        $this->dateTime = \DateTimeImmutable::createFromFormat('U', $data['dt'], new \DateTimeZone('UTC'));
+        $this->dateTime = \DateTimeImmutable::createFromFormat('U', $data['dt']);
         $this->precipitation = $data['precipitation'];
     }
 

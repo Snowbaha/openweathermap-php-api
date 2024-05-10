@@ -14,6 +14,7 @@ use ProgrammatorDev\OpenWeatherMap\Exception\UnexpectedErrorException;
 use ProgrammatorDev\OpenWeatherMap\Language\Language;
 use ProgrammatorDev\OpenWeatherMap\Resource\AirPollutionResource;
 use ProgrammatorDev\OpenWeatherMap\Resource\GeocodingResource;
+use ProgrammatorDev\OpenWeatherMap\Resource\OneCallResource;
 use ProgrammatorDev\OpenWeatherMap\Resource\WeatherResource;
 use ProgrammatorDev\OpenWeatherMap\UnitSystem\UnitSystem;
 
@@ -32,6 +33,11 @@ class OpenWeatherMap extends Api
         $this->configureApi();
     }
 
+    public function oneCall(): OneCallResource
+    {
+        return new OneCallResource($this);
+    }
+
     public function weather(): WeatherResource
     {
         return new WeatherResource($this);
@@ -46,16 +52,6 @@ class OpenWeatherMap extends Api
     {
         return new GeocodingResource($this);
     }
-
-//    public function config(): Config
-//    {
-//        return $this->config;
-//    }
-
-//    public function oneCall(): OneCallEndpoint
-//    {
-//        return new OneCallEndpoint($this);
-//    }
 
     private function configureOptions(array $options): array
     {

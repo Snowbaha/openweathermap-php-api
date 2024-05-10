@@ -1,6 +1,6 @@
 <?php
 
-namespace ProgrammatorDev\OpenWeatherMap\Entity;
+namespace ProgrammatorDev\OpenWeatherMap\Entity\OneCall;
 
 class MoonPhase
 {
@@ -17,13 +17,13 @@ class MoonPhase
 
     private string $name;
 
-    private string $sysName;
+    private string $systemName;
 
     public function __construct(array $data)
     {
         $this->value = $data['moon_phase'];
-        $this->sysName = $this->findSysName($this->value);
-        $this->name = ucfirst(strtolower(str_replace('_', ' ', $this->sysName)));
+        $this->systemName = $this->findSystemName($this->value);
+        $this->name = \ucwords(\strtolower(\str_replace('_', ' ', $this->systemName)));
     }
 
     public function getValue(): float
@@ -36,12 +36,12 @@ class MoonPhase
         return $this->name;
     }
 
-    public function getSysName(): string
+    public function getSystemName(): string
     {
-        return $this->sysName;
+        return $this->systemName;
     }
 
-    private function findSysName(float $value): string
+    private function findSystemName(float $value): string
     {
         return match (true) {
             $value > 0 && $value < 0.25 => self::WAXING_CRESCENT,

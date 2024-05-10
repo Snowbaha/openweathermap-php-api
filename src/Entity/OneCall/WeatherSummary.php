@@ -3,11 +3,10 @@
 namespace ProgrammatorDev\OpenWeatherMap\Entity\OneCall;
 
 use ProgrammatorDev\OpenWeatherMap\Entity\Coordinate;
-use ProgrammatorDev\OpenWeatherMap\Entity\Temperature;
 use ProgrammatorDev\OpenWeatherMap\Entity\Timezone;
 use ProgrammatorDev\OpenWeatherMap\Entity\Wind;
 
-class WeatherAggregate
+class WeatherSummary
 {
     private Coordinate $coordinate;
 
@@ -30,13 +29,20 @@ class WeatherAggregate
     public function __construct(array $data)
     {
         $this->coordinate = new Coordinate($data);
+
         $this->timezone = new Timezone([
             'timezone_offset' => \DateTimeImmutable::createFromFormat('P', $data['tz'])->getOffset()
         ]);
-        $this->dateTime = \DateTimeImmutable::createFromFormat('Y-m-d', $data['date'], new \DateTimeZone('UTC'))->setTime(0, 0);
-        $this->cloudiness = round($data['cloud_cover']['afternoon']);
-        $this->humidity = round($data['humidity']['afternoon']);
+
+        $this->dateTime = \DateTimeImmutable::createFromFormat(
+            'Y-m-d H:i:s P',
+            \sprintf('%s 00:00:00 %s', $data['date'], $data['tz'])
+        );
+
+        $this->cloudiness = \round($data['cloud_cover']['afternoon']);
+        $this->humidity = \round($data['humidity']['afternoon']);
         $this->precipitation = $data['precipitation']['total'];
+
         $this->temperature = new Temperature([
             'morn' => $data['temperature']['morning'],
             'day' => $data['temperature']['afternoon'],
@@ -45,10 +51,12 @@ class WeatherAggregate
             'min' => $data['temperature']['min'],
             'max' => $data['temperature']['max']
         ]);
-        $this->atmosphericPressure = round($data['pressure']['afternoon']);
+
+        $this->atmosphericPressure = \round($data['pressure']['afternoon']);
+
         $this->wind = new Wind([
             'speed' => $data['wind']['max']['speed'],
-            'deg' => round($data['wind']['max']['direction'])
+            'deg' => \round($data['wind']['max']['direction'])
         ]);
     }
 

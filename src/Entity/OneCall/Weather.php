@@ -2,190 +2,90 @@
 
 namespace ProgrammatorDev\OpenWeatherMap\Entity\OneCall;
 
-use ProgrammatorDev\OpenWeatherMap\Entity\MoonPhase;
-use ProgrammatorDev\OpenWeatherMap\Entity\Rain;
-use ProgrammatorDev\OpenWeatherMap\Entity\Snow;
-use ProgrammatorDev\OpenWeatherMap\Entity\Temperature;
-use ProgrammatorDev\OpenWeatherMap\Entity\WeatherCondition;
-use ProgrammatorDev\OpenWeatherMap\Entity\Wind;
-use ProgrammatorDev\OpenWeatherMap\Util\EntityListTrait;
+use ProgrammatorDev\OpenWeatherMap\Entity\Coordinate;
+use ProgrammatorDev\OpenWeatherMap\Entity\Timezone;
+use ProgrammatorDev\OpenWeatherMap\Util\EntityTrait;
 
 class Weather
 {
-    use EntityListTrait;
+    use EntityTrait;
 
-    private \DateTimeImmutable $dateTime;
+    private Coordinate $coordinate;
 
-    private ?\DateTimeImmutable $sunriseAt;
+    private Timezone $timezone;
 
-    private ?\DateTimeImmutable $sunsetAt;
+    private WeatherData $current;
 
-    private ?\DateTimeImmutable $moonriseAt;
+    /** @var ?MinuteData[] */
+    private ?array $minutelyForecast;
 
-    private ?\DateTimeImmutable $moonsetAt;
+    /** @var HourData[] */
+    private array $hourlyForecast;
 
-    private ?MoonPhase $moonPhase;
+    /** @var DayData[] */
+    private array $dailyForecast;
 
-    private Temperature|float $temperature;
-
-    private Temperature|float $temperatureFeelsLike;
-
-    private ?string $description;
-
-    private int $atmosphericPressure;
-
-    private int $humidity;
-
-    private float $dewPoint;
-
-    private ?float $ultraVioletIndex;
-
-    private int $cloudiness;
-
-    private ?int $visibility;
-
-    private Wind $wind;
-
-    private ?int $precipitationProbability;
-
-    private Rain|float|null $rain;
-
-    private Snow|float|null $snow;
-
-    /** @var WeatherCondition[] */
-    private array $weatherConditions;
+    /** @var ?Alert[] */
+    private ?array $alerts;
 
     public function __construct(array $data)
     {
-        $timezoneUtc = new \DateTimeZone('UTC');
-
-        $this->dateTime = \DateTimeImmutable::createFromFormat('U', $data['dt'], $timezoneUtc);
-        $this->sunriseAt = !empty($data['sunrise']) ? \DateTimeImmutable::createFromFormat('U', $data['sunrise'], $timezoneUtc) : null;
-        $this->sunsetAt = !empty($data['sunset']) ? \DateTimeImmutable::createFromFormat('U', $data['sunset'], $timezoneUtc) : null;
-        $this->moonriseAt = !empty($data['moonrise']) ? \DateTimeImmutable::createFromFormat('U', $data['moonrise'], $timezoneUtc) : null;
-        $this->moonsetAt = !empty($data['moonset']) ? \DateTimeImmutable::createFromFormat('U', $data['moonset'], $timezoneUtc) : null;
-        $this->moonPhase = !empty($data['moon_phase']) ? new MoonPhase($data) : null;
-        $this->temperature = is_array($data['temp']) ? new Temperature($data['temp']) : $data['temp'];
-        $this->temperatureFeelsLike = is_array($data['feels_like']) ? new Temperature($data['feels_like']) : $data['feels_like'];
-        $this->description = $data['summary'] ?? null;
-        $this->atmosphericPressure = $data['pressure'];
-        $this->humidity = $data['humidity'];
-        $this->dewPoint = $data['dew_point'];
-        $this->ultraVioletIndex = $data['uvi'] ?? null;
-        $this->cloudiness = $data['clouds'];
-        $this->visibility = $data['visibility'] ?? null;
-        $this->wind = new Wind([
-            'speed' => $data['wind_speed'],
-            'deg' => $data['wind_deg'],
-            'gust' => $data['wind_gust'] ?? null
+        $this->coordinate = new Coordinate([
+            'lat' => $data['lat'],
+            'lon' => $data['lon']
         ]);
-        $this->precipitationProbability = isset($data['pop']) ? round($data['pop'] * 100) : null;
-        $this->rain = !empty($data['rain'])
-            ? is_array($data['rain']) ? new Rain($data['rain']) : $data['rain']
+
+        $this->timezone = new Timezone([
+            'timezone' => $data['timezone'],
+            'timezone_offset' => $data['timezone_offset']
+        ]);
+
+        $this->current = new WeatherData($data['current']);
+
+        $this->minutelyForecast = isset($data['minutely'])
+            ? $this->createEntityList(MinuteData::class, $data['minutely'])
             : null;
-        $this->snow = !empty($data['snow'])
-            ? is_array($data['snow']) ? new Snow($data['snow']) : $data['snow']
+
+        $this->hourlyForecast = $this->createEntityList(HourData::class, $data['hourly']);
+        $this->dailyForecast = $this->createEntityList(DayData::class, $data['daily']);
+
+        $this->alerts = isset($data['alerts'])
+            ? $this->createEntityList(Alert::class, $data['alerts'])
             : null;
-        $this->weatherConditions = $this->createEntityList(WeatherCondition::class, $data['weather']);
     }
 
-    public function getDateTime(): \DateTimeImmutable
+    public function getCoordinate(): Coordinate
     {
-        return $this->dateTime;
+        return $this->coordinate;
     }
 
-    public function getSunriseAt(): ?\DateTimeImmutable
+    public function getTimezone(): Timezone
     {
-        return $this->sunriseAt;
+        return $this->timezone;
     }
 
-    public function getSunsetAt(): ?\DateTimeImmutable
+    public function getCurrent(): WeatherData
     {
-        return $this->sunsetAt;
+        return $this->current;
     }
 
-    public function getMoonriseAt(): ?\DateTimeImmutable
+    public function getMinutelyForecast(): ?array
     {
-        return $this->moonriseAt;
+        return $this->minutelyForecast;
     }
 
-    public function getMoonsetAt(): ?\DateTimeImmutable
+    public function getHourlyForecast(): array
     {
-        return $this->moonsetAt;
+        return $this->hourlyForecast;
     }
 
-    public function getMoonPhase(): ?MoonPhase
+    public function getDailyForecast(): array
     {
-        return $this->moonPhase;
+        return $this->dailyForecast;
     }
 
-    public function getTemperature(): Temperature|float
+    public function getAlerts(): ?array
     {
-        return $this->temperature;
-    }
-
-    public function getTemperatureFeelsLike(): Temperature|float
-    {
-        return $this->temperatureFeelsLike;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function getAtmosphericPressure(): int
-    {
-        return $this->atmosphericPressure;
-    }
-
-    public function getHumidity(): int
-    {
-        return $this->humidity;
-    }
-
-    public function getDewPoint(): float
-    {
-        return $this->dewPoint;
-    }
-
-    public function getUltraVioletIndex(): ?float
-    {
-        return $this->ultraVioletIndex;
-    }
-
-    public function getCloudiness(): int
-    {
-        return $this->cloudiness;
-    }
-
-    public function getVisibility(): ?int
-    {
-        return $this->visibility;
-    }
-
-    public function getWind(): Wind
-    {
-        return $this->wind;
-    }
-
-    public function getPrecipitationProbability(): ?int
-    {
-        return $this->precipitationProbability;
-    }
-
-    public function getRain(): Rain|float|null
-    {
-        return $this->rain;
-    }
-
-    public function getSnow(): Snow|float|null
-    {
-        return $this->snow;
-    }
-
-    public function getWeatherConditions(): array
-    {
-        return $this->weatherConditions;
+        return $this->alerts;
     }
 }

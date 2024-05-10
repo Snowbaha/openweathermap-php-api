@@ -5,7 +5,7 @@ namespace ProgrammatorDev\OpenWeatherMap\Entity\OneCall;
 use ProgrammatorDev\OpenWeatherMap\Entity\Coordinate;
 use ProgrammatorDev\OpenWeatherMap\Entity\Timezone;
 
-class WeatherLocation extends Weather
+class WeatherMoment extends WeatherData
 {
     private Coordinate $coordinate;
 
@@ -15,8 +15,15 @@ class WeatherLocation extends Weather
     {
         parent::__construct($data['data'][0]);
 
-        $this->coordinate = new Coordinate($data);
-        $this->timezone = new Timezone($data);
+        $this->coordinate = new Coordinate([
+            'lat' => $data['lat'],
+            'lon' => $data['lon']
+        ]);
+
+        $this->timezone = new Timezone([
+            'timezone' => $data['timezone'],
+            'timezone_offset' => $data['timezone_offset']
+        ]);
     }
 
     public function getCoordinate(): Coordinate
