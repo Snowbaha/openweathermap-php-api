@@ -1,12 +1,16 @@
 # Entities
 
 - [One Call](#one-call)
-  - [Alert](#alert)
-  - [MinuteForecast](#minuteforecast)
-  - [OneCall](#onecall)
   - [Weather](#weather)
-  - [WeatherAggregate](#weatheraggregate)
-  - [WeatherLocation](#weatherlocation)
+  - [WeatherMoment](#weathermoment)
+  - [WeatherSummary](#weathersummary)
+  - [WeatherData](#weatherdata)
+  - [MinuteData](#minutedata)
+  - [HourData](#hourdata)
+  - [DayData](#daydata)
+  - [Alert](#alert)
+  - [MoonPhase](#moonphase)
+  - [Temperature](#temperature)
 - [Weather](#weather-1)
   - [Weather](#weather-2)
   - [WeatherCollection](#weathercollection)
@@ -30,54 +34,41 @@
 
 ## One Call
 
-### Alert
-
-- `getSenderName()`: `string`
-- `getEventName()`: `string`
-- `getStartsAt()`: `\DateTimeImmutable`
-- `getEndsAt()`: `\DateTimeImmutable`
-- `getDescription()`: `string`
-- `getTags()`: `array`
-
-### MinuteForecast
-
-- `getDateTime()`: `\DateTimeImmutable`
-- `getPrecipitation()`: `float`
-
-### OneCall
+### Weather
 
 - `getCoordinate()`: [`Coordinate`](#coordinate)
 - `getTimezone()`: [`Timezone`](#timezone)
-- `getCurrent()`: [`Weather`](#weather)
-- `getMinutelyForecast()`: [`?MinuteForecast[]`](#minuteforecast)
-- `getHourlyForecast()`: [`Weather[]`](#weather)
-- `getDailyForecast()`: [`Weather[]`](#weather)
+- `getCurrent()`: [`WeatherData`](#weatherdata)
+- `getMinutelyForecast()`: [`?MinuteData[]`](#minutedata)
+- `getHourlyForecast()`: [`HourData[]`](#hourdata)
+- `getDailyForecast()`: [`DayData[]`](#daydata)
 - `getAlerts()`: [`?Alert[]`](#alert)
 
-### Weather
+### WeatherMoment
 
+- `getCoordinate()`: [`Coordinate`](#coordinate)
+- `getTimezone()`: [`Timezone`](#timezone)
 - `getDateTime()`: `\DateTimeImmutable`
-- `getSunriseAt()`: `?\DateTimeImmutable`
-- `getSunsetAt()`: `?\DateTimeImmutable`
-- `getMoonriseAt()`: `?\DateTimeImmutable`
-- `getMoonsetAt()`: `?\DateTimeImmutable`
-- `getMoonPhase()`: [`?MoonPhase`](#moonphase)
-- `getTemperature()`: `float`|[`Temperature`](#temperature)
-- `getTemperatureFeelsLike()`: `float`|[`Temperature`](#temperature)
-- `getDescription()`: `?string`
+- `getTemperature()`: `float`
+- `getTemperatureFeelsLike()`: `float`
 - `getAtmosphericPressure()`: `int`
 - `getHumidity()`: `int`
-- `getDewPoint()`: `?float`
+- `getDewPoint()`: `float`
 - `getUltraVioletIndex()`: `?float`
 - `getCloudiness()`: `int`
 - `getVisibility()`: `?int`
 - `getWind()`: [`Wind`](#wind)
-- `getPrecipitationProbability()`: `?int`
-- `getRain()`: `null`|`float`|[`Rain`](#rain)
-- `getSnow()`: `null`|`float`|[`Snow`](#snow)
-- `getWeatherConditions()`: [`WeatherCondition[]`](#weathercondition)
+- `getConditions()`: [`Condition[]`](#condition)
+- `getSummary()`: `?string`
+- `getRainVolume()`: `?float`
+- `getSnowVolume()`: `?float`
+- `getMoonPhase()`: [`?MoonPhase`](#moonphase)
+- `getSunriseAt()`: `?\DateTimeImmutable`
+- `getSunsetAt()`: `?\DateTimeImmutable`
+- `getMoonriseAt()`: `?\DateTimeImmutable`
+- `getMoonsetAt()`: `?\DateTimeImmutable`
 
-### WeatherAggregate
+### WeatherSummary
 
 - `getCoordinate()`: [`Coordinate`](#coordinate)
 - `getTimezone()`: [`Timezone`](#timezone)
@@ -89,30 +80,91 @@
 - `getAtmosphericPressure()`: `int`
 - `getWind()`: [`Wind`](#wind)
 
-### WeatherLocation
+### WeatherData
 
-- `getCoordinate()`: [`Coordinate`](#coordinate)
-- `getTimezone()`: [`Timezone`](#timezone)
 - `getDateTime()`: `\DateTimeImmutable`
-- `getSunriseAt()`: `?\DateTimeImmutable`
-- `getSunsetAt()`: `?\DateTimeImmutable`
-- `getMoonriseAt()`: `?\DateTimeImmutable`
-- `getMoonsetAt()`: `?\DateTimeImmutable`
-- `getMoonPhase()`: [`?MoonPhase`](#moonphase)
-- `getTemperature()`: `float`|[`Temperature`](#temperature)
-- `getTemperatureFeelsLike()`: `float`|[`Temperature`](#temperature)
-- `getDescription()`: `?string`
+- `getTemperature()`: `float`
+- `getTemperatureFeelsLike()`: `float`
 - `getAtmosphericPressure()`: `int`
+- `getVisibility()`: `?int`
 - `getHumidity()`: `int`
-- `getDewPoint()`: `?float`
+- `getDewPoint()`: `float`
 - `getUltraVioletIndex()`: `?float`
 - `getCloudiness()`: `int`
-- `getVisibility()`: `?int`
 - `getWind()`: [`Wind`](#wind)
-- `getPrecipitationProbability()`: `?int`
-- `getRain()`: `null`|`float`|[`Rain`](#rain)
-- `getSnow()`: `null`|`float`|[`Snow`](#snow)
-- `getWeatherConditions()`: [`WeatherCondition[]`](#weathercondition)
+- `getConditions()`: [`Condition[]`](#condition)
+- `getRainVolume()`: `?float`
+- `getSnowVolume()`: `?float`
+- `getSunriseAt()`: `?\DateTimeImmutable`
+- `getSunsetAt()`: `?\DateTimeImmutable`
+
+### MinuteData
+
+- `getDateTime()`: `\DateTimeImmutable`
+- `getPrecipitation()`: `float`
+
+### HourData
+
+- `getDateTime()`: `\DateTimeImmutable`
+- `getTemperature()`: `float`
+- `getTemperatureFeelsLike()`: `float`
+- `getVisibility()`: `int`
+- `getPrecipitationProbability()`: `int`
+- `getAtmosphericPressure()`: `int`
+- `getHumidity()`: `int`
+- `getDewPoint()`: `float`
+- `getUltraVioletIndex()`: `?float`
+- `getCloudiness()`: `int`
+- `getWind()`: [`Wind`](#wind)
+- `getConditions()`: [`Condition[]`](#condition)
+- `getRainVolume()`: `?float`
+- `getSnowVolume()`: `?float`
+
+### DayData
+
+- `getDateTime()`: `\DateTimeImmutable`
+- `getTemperature()`: [`Temperature`](#temperature)
+- `getTemperatureFeelsLike()`: [`Temperature`](#temperature)
+- `getPrecipitationProbability()`: `int`
+- `getAtmosphericPressure()`: `int`
+- `getHumidity()`: `int`
+- `getDewPoint()`: `float`
+- `getUltraVioletIndex()`: `?float`
+- `getCloudiness()`: `int`
+- `getWind()`: [`Wind`](#wind)
+- `getConditions()`: [`Condition[]`](#condition)
+- `getRainVolume()`: `?float`
+- `getSnowVolume()`: `?float`
+- `getSummary()`: `string`
+- `getMoonPhase()`: [`MoonPhase`](#moonphase)
+- `getSunriseAt()`: `\DateTimeImmutable`
+- `getSunsetAt()`: `\DateTimeImmutable`
+- `getMoonriseAt()`: `\DateTimeImmutable`
+- `getMoonsetAt()`: `\DateTimeImmutable`
+
+### Alert
+
+- `getSenderName()`: `string`
+- `getEventName()`: `string`
+- `getStartsAt()`: `\DateTimeImmutable`
+- `getEndsAt()`: `\DateTimeImmutable`
+- `getDescription()`: `string`
+- `getTags()`: `array`
+
+### MoonPhase
+
+- `getValue()`: `float`
+- `getName()`: `string`
+- `getSystemName()`: `string`
+
+### Temperature
+
+- `getMorning()`: `float`
+- `getDay()`: `float`
+- `getEvening()`: `float`
+- `getNight()`: `float`
+- `getMin()`: `?float`
+- `getMax()`: `?float`
 
 ## Weather
 
@@ -138,7 +190,7 @@
 
 - `getNumResults()`: `int`
 - `getLocation()`: [`Location`](#location)
-- `getData()`: [`WeatherData[]`](#weatherdata)
+- `getData()`: [`WeatherData[]`](#weatherdata-1)
 
 ### WeatherData
 
@@ -239,21 +291,6 @@
 - `getTimezone()`: [`?Timezone`](#timezone)
 - `getSunriseAt()`: `?\DateTimeImmutable`
 - `getSunsetAt()`: `?\DateTimeImmutable`
-
-### MoonPhase
-
-- `getValue()`: `float`
-- `getName()`: `string`
-- `getSysName()`: `string`
-
-### Temperature
-
-- `getMorning()`: `float`
-- `getDay()`: `float`
-- `getEvening()`: `float`
-- `getNight()`: `float`
-- `getMin()`: `?float`
-- `getMax()`: `?float`
 
 ### Timezone
 

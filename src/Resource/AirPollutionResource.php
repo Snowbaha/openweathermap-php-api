@@ -33,7 +33,7 @@ class AirPollutionResource extends Resource
     }
 
     /**
-     * Get access to air pollution forecast data
+     * Get access to air pollution forecast data per hour
      *
      * @throws ValidationException
      * @throws ClientExceptionInterface
@@ -55,7 +55,7 @@ class AirPollutionResource extends Resource
     }
 
     /**
-     * Get access to historical air pollution data
+     * Get access to historical air pollution data per hour between two dates
      *
      * @throws ValidationException
      * @throws ClientExceptionInterface

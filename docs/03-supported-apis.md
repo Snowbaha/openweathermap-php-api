@@ -31,46 +31,41 @@
 getWeather(float $latitude, float $longitude): OneCall
 ```
 
-Get current and forecast (minutely, hourly and daily) weather data.
+Get access to current weather, minute forecast for 1 hour, hourly forecast for 48 hours, 
+daily forecast for 8 days and government weather alerts.
 
-Returns a [`OneCall`](05-entities.md#onecall) object:
+Returns a [`Weather`](05-entities.md#weather) object:
 
 ```php
-$weather = $openWeatherMap->oneCall()->getWeather(50, 50);
-
-echo $weather->getCurrent()->getTemperature();
+$weather = $api->oneCall()->getWeather(50, 50);
 ```
 
-#### `getHistoryMoment`
+#### `getWeatherByDate`
 
 ```php
-getHistoryMoment(float $latitude, float $longitude, \DateTimeInterface $dateTime): WeatherLocation
+getWeatherByDate(float $latitude, float $longitude, \DateTimeInterface $dateTime): WeatherMoment
 ```
 
-Get weather data from a single moment in the past.
+Get access to weather data for any datetime.
 
-Returns a [`WeatherLocation`](05-entities.md#weatherlocation) object:
+Returns a [`WeatherMoment`](05-entities.md#weathermoment) object:
 
 ```php
-$weather = $openWeatherMap->oneCall()->getHistoryMoment(50, 50, new \DateTime('2023-01-01 12:00:00'));
-
-echo $weather->getTemperature();
+$weather = $api->oneCall()->getWeatherByDate(50, 50, new \DateTime('2023-05-13 16:32:00'));
 ```
 
-#### `getHistoryAggregate`
+#### `getWeatherSummaryByDate`
 
 ```php
-getHistoryAggregate(float $latitude, float $longitude, \DateTimeInterface $date): WeatherAggregate
+getWeatherSummaryByDate(float $latitude, float $longitude, \DateTimeInterface $date): WeatherSummary
 ```
 
-Get aggregated weather data from a single day in the past.
+Get access to aggregated weather data for a particular date.
 
-Returns a [`WeatherAggregate`](05-entities.md#weatheraggregate) object:
+Returns a [`WeatherSummary`](05-entities.md#weathersummary) object:
 
 ```php
-$weather = $openWeatherMap->oneCall()->getHistoryAggregate(50, 50, new \DateTime('1985-07-19'));
-
-echo $weather->getTemperature();
+$weatherSummary = $api->oneCall()->getWeatherSummaryByDate(50, 50, new \DateTime('1985-07-19'));
 ```
 
 ### Weather
@@ -81,7 +76,7 @@ echo $weather->getTemperature();
 getCurrent(float $latitude, float $longitude): Weather
 ```
 
-Get current weather data.
+Get access to current weather data.
 
 Returns a [`Weather`](05-entities.md#weather-2) object:
 
@@ -95,7 +90,7 @@ $currentWeather = $api->weather()->getCurrent(50, 50);
 getForecast(float $latitude, float $longitude, int $numResults = 40): WeatherCollection
 ```
 
-Get weather forecast for the next 5 days in 3-hour steps.
+Get access to 5-day weather forecast data with 3-hour steps.
 
 Returns a [`WeatherCollection`](05-entities.md#weathercollection) object:
 
@@ -113,7 +108,7 @@ $weatherForecast = $api->weather()->getForecast(50, 50, 8);
 getCurrent(float $latitude, float $longitude): AirPollution
 ```
 
-Get current air pollution data.
+Get access to current air pollution data.
 
 Returns a [`AirPollution`](05-entities.md#airpollution) object:
 
@@ -127,7 +122,7 @@ $currentAirPollution = $api->airPollution()->getCurrent(50, 50);
 getForecast(float $latitude, float $longitude): AirPollutionCollection
 ```
 
-Get air pollution forecast data per hour.
+Get access to air pollution forecast data per hour.
 
 Returns a [`AirPollutionCollection`](05-entities.md#airpollutioncollection) object:
 
@@ -141,7 +136,7 @@ $airPollutionForecast = $api->airPollution()->getForecast(50, 50);
 getHistory(float $latitude, float $longitude, \DateTimeInterface $startDate, \DateTimeInterface $endDate): AirPollutionCollection
 ```
 
-Get air pollution history data per hour between two dates.
+Get access to historical air pollution data per hour between two dates.
 
 Returns a [`AirPollutionCollection`](05-entities.md#airpollutioncollection) object:
 
@@ -164,7 +159,7 @@ $airPollutionHistory = $api->airPollution()->getHistory(50, 50, $startDate, $end
 getByLocationName(string $locationName, int $numResults = 5): array
 ```
 
-Get locations by location name. 
+Get geographical coordinates (latitude, longitude) by using the name of the location (city name or area name). 
 
 Returns an array of [`Location`](05-entities.md#location) entities.
 
@@ -181,7 +176,7 @@ $locations = $api->geocoding()->getByLocationName('lisbon');
 getByCoordinate(float $latitude, float $longitude, int $numResults = 5): array
 ```
 
-Get locations by coordinate. 
+Get name of the location (city name or area name) by using geographical coordinates (latitude, longitude). 
 
 Returns an array of [`Location`](05-entities.md#location) entities.
 
@@ -195,7 +190,7 @@ $locations = $api->geocoding()->getByCoordinate(50, 50);
 getByZipCode(string $zipCode, string $countryCode): ZipLocation
 ```
 
-Get location by zip code. 
+Get geographical coordinates (latitude, longitude) by using the zip/postal code. 
 
 Returns a [`ZipLocation`](05-entities.md#ziplocation) object.
 
