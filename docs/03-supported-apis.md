@@ -252,7 +252,7 @@ Semantics of values:
 > Setting cache to `null` or `0` seconds will **not** invalidate any existing cache.
 
 Available for all APIs if a cache adapter is set. 
-Check the following [documentation](02-configuration.md#cache) for more information.
+Check the following [documentation](02-configuration.md#setcachebuilder) for more information.
 
 ```php
 // cache will be saved for 1 hour for this request alone

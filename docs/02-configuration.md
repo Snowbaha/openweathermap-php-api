@@ -69,7 +69,7 @@ $api = new OpenWeatherMap('yourapikey', [
 
 > [!IMPORTANT]
 > The [PHP API SDK](https://github.com/programmatordev/php-api-sdk) library was used to create the OpenWeatherMap PHP API.
-> To get to know about all the available methods, make sure to check the documentation [here](https://github.com/programmatordev/php-api-sdk?tab=readme-ov-file#php-api-sdk).
+> To get to know about all the available methods, make sure to check the documentation [here](https://github.com/programmatordev/php-api-sdk?tab=readme-ov-file#documentation).
 
 The following sections have examples of some of the most important methods, 
 particularly related with the configuration of the client, cache and logger.
