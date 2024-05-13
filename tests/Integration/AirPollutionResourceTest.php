@@ -1,6 +1,6 @@
 <?php
 
-namespace Integration;
+namespace ProgrammatorDev\OpenWeatherMap\Test\Integration;
 
 use ProgrammatorDev\OpenWeatherMap\Entity\AirPollution\AirPollution;
 use ProgrammatorDev\OpenWeatherMap\Entity\AirPollution\AirPollutionCollection;

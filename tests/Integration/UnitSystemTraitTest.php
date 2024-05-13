@@ -1,6 +1,6 @@
 <?php
 
-namespace Integration;
+namespace ProgrammatorDev\OpenWeatherMap\Test\Integration;
 
 use ProgrammatorDev\OpenWeatherMap\Resource\Resource;
 use ProgrammatorDev\OpenWeatherMap\Resource\Util\UnitSystemTrait;

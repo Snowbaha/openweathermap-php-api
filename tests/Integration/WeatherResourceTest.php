@@ -1,6 +1,6 @@
 <?php
 
-namespace Integration;
+namespace ProgrammatorDev\OpenWeatherMap\Test\Integration;
 
 use ProgrammatorDev\OpenWeatherMap\Entity\Weather\Weather;
 use ProgrammatorDev\OpenWeatherMap\Entity\Weather\WeatherCollection;
