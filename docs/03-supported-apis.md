@@ -3,8 +3,8 @@
 - [APIs](#apis)
   - [One Call](#one-call)
     - [getWeather](#getweather)
-    - [getHistoryMoment](#gethistorymoment)
-    - [getHistoryAggregate](#gethistoryaggregate)
+    - [getWeatherByDate](#getweatherbydate)
+    - [getWeatherSummaryByDate](#getweathersummarybydate)
   - [Weather](#weather)
     - [getCurrent](#getcurrent)
     - [getForecast](#getforecast)
@@ -28,7 +28,7 @@
 #### `getWeather`
 
 ```php
-getWeather(float $latitude, float $longitude): OneCall
+getWeather(float $latitude, float $longitude): Weather
 ```
 
 Get access to current weather, minute forecast for 1 hour, hourly forecast for 48 hours, 
@@ -161,7 +161,7 @@ getByLocationName(string $locationName, int $numResults = 5): array
 
 Get geographical coordinates (latitude, longitude) by using the name of the location (city name or area name). 
 
-Returns an array of [`Location`](05-entities.md#location) entities.
+Returns an array of [`Location`](05-entities.md#location) objects.
 
 ```php
 $locations = $api->geocoding()->getByLocationName('lisbon');
@@ -178,7 +178,7 @@ getByCoordinate(float $latitude, float $longitude, int $numResults = 5): array
 
 Get name of the location (city name or area name) by using geographical coordinates (latitude, longitude). 
 
-Returns an array of [`Location`](05-entities.md#location) entities.
+Returns an array of [`Location`](05-entities.md#location) objects.
 
 ```php
 $locations = $api->geocoding()->getByCoordinate(50, 50);
