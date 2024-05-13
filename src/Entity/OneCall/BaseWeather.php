@@ -51,6 +51,9 @@ class BaseWeather
         $this->snowVolume = $data['snow']['1h'] ?? $data['snow']['3h'] ?? $data['snow'] ?? null;
     }
 
+    /**
+     * DateTime in UTC
+     */
     public function getDateTime(): \DateTimeImmutable
     {
         return $this->dateTime;

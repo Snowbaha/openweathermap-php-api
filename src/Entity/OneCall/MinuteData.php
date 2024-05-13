@@ -14,6 +14,9 @@ class MinuteData
         $this->precipitation = $data['precipitation'];
     }
 
+    /**
+     * DateTime in UTC
+     */
     public function getDateTime(): \DateTimeImmutable
     {
         return $this->dateTime;

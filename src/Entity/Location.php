@@ -115,11 +115,17 @@ class Location
         return $this->timezone;
     }
 
+    /**
+     * Sunrise date in UTC
+     */
     public function getSunriseAt(): ?\DateTimeImmutable
     {
         return $this->sunriseAt;
     }
 
+    /**
+     * Sunset date in UTC
+     */
     public function getSunsetAt(): ?\DateTimeImmutable
     {
         return $this->sunsetAt;

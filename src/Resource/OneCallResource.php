@@ -4,7 +4,6 @@ namespace ProgrammatorDev\OpenWeatherMap\Resource;
 
 use ProgrammatorDev\Api\Method;
 use ProgrammatorDev\OpenWeatherMap\Entity\OneCall\Weather;
-use ProgrammatorDev\OpenWeatherMap\Entity\OneCall\WeatherData;
 use ProgrammatorDev\OpenWeatherMap\Entity\OneCall\WeatherMoment;
 use ProgrammatorDev\OpenWeatherMap\Entity\OneCall\WeatherSummary;
 use ProgrammatorDev\OpenWeatherMap\Resource\Util\LanguageTrait;
@@ -18,6 +17,9 @@ class OneCallResource extends Resource
     use UnitSystemTrait;
 
     /**
+     * Get access to current weather, minute forecast for 1 hour, hourly forecast for 48 hours,
+     * daily forecast for 8 days and government weather alerts
+     *
      * @throws ValidationException
      * @throws ClientExceptionInterface
      */
@@ -38,10 +40,12 @@ class OneCallResource extends Resource
     }
 
     /**
+     * Get access to weather data for any datetime
+     *
      * @throws ValidationException
      * @throws ClientExceptionInterface
      */
-    public function getWeatherByDateTime(float $latitude, float $longitude, \DateTimeInterface $dateTime): WeatherMoment
+    public function getWeatherByDate(float $latitude, float $longitude, \DateTimeInterface $dateTime): WeatherMoment
     {
         $this->validateCoordinate($latitude, $longitude);
 
@@ -61,6 +65,8 @@ class OneCallResource extends Resource
     }
 
     /**
+     * Get access to aggregated weather data for a particular date
+     *
      * @throws ValidationException
      * @throws ClientExceptionInterface
      */

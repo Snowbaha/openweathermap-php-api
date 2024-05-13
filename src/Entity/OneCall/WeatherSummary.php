@@ -70,6 +70,9 @@ class WeatherSummary
         return $this->timezone;
     }
 
+    /**
+     * DateTime in UTC
+     */
     public function getDateTime(): \DateTimeImmutable
     {
         return $this->dateTime;

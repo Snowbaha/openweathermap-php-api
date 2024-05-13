@@ -11,6 +11,8 @@ use Psr\Http\Client\ClientExceptionInterface;
 class AirPollutionResource extends Resource
 {
     /**
+     * Get access to current air pollution data
+     *
      * @throws ValidationException
      * @throws ClientExceptionInterface
      */
@@ -31,6 +33,8 @@ class AirPollutionResource extends Resource
     }
 
     /**
+     * Get access to air pollution forecast data
+     *
      * @throws ValidationException
      * @throws ClientExceptionInterface
      */
@@ -51,6 +55,8 @@ class AirPollutionResource extends Resource
     }
 
     /**
+     * Get access to historical air pollution data
+     *
      * @throws ValidationException
      * @throws ClientExceptionInterface
      */

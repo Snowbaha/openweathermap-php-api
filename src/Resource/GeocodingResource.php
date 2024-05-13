@@ -16,6 +16,8 @@ class GeocodingResource extends Resource
     private const NUM_RESULTS = 5;
 
     /**
+     * Get geographical coordinates (latitude, longitude) by using the name of the location (city name or area name)
+     *
      * @return Location[]
      * @throws ValidationException
      * @throws ClientExceptionInterface
@@ -38,6 +40,8 @@ class GeocodingResource extends Resource
     }
 
     /**
+     * Get geographical coordinates (latitude, longitude) by using the zip/postal code
+     *
      * @throws ValidationException
      * @throws ClientExceptionInterface
      */
@@ -58,6 +62,8 @@ class GeocodingResource extends Resource
     }
 
     /**
+     * Get name of the location (city name or area name) by using geographical coordinates (latitude, longitude)
+     *
      * @return Location[]
      * @throws ValidationException
      * @throws ClientExceptionInterface

@@ -18,6 +18,8 @@ class WeatherResource extends Resource
     private const NUM_RESULTS = 40;
 
     /**
+     * Get access to current weather data
+     *
      * @throws ValidationException
      * @throws ClientExceptionInterface
      */
@@ -38,6 +40,8 @@ class WeatherResource extends Resource
     }
 
     /**
+     * Get access to 5-day weather forecast data with 3-hour steps
+     *
      * @throws ValidationException
      * @throws ClientExceptionInterface
      */

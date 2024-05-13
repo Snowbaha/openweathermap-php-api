@@ -62,21 +62,33 @@ class DayData extends BaseWeather
         return $this->moonPhase;
     }
 
+    /**
+     * Moonrise date in UTC
+     */
     public function getMoonriseAt(): \DateTimeImmutable
     {
         return $this->moonriseAt;
     }
 
+    /**
+     * Moonset date in UTC
+     */
     public function getMoonsetAt(): \DateTimeImmutable
     {
         return $this->moonsetAt;
     }
 
+    /**
+     * Sunrise date in UTC
+     */
     public function getSunriseAt(): \DateTimeImmutable
     {
         return $this->sunriseAt;
     }
 
+    /**
+     * Sunset date in UTC
+     */
     public function getSunsetAt(): \DateTimeImmutable
     {
         return $this->sunsetAt;

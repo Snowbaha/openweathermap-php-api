@@ -38,6 +38,9 @@ class AirPollutionData
         $this->ammonia = $data['components']['nh3'];
     }
 
+    /**
+     * DateTime in UTC
+     */
     public function getDateTime(): \DateTimeImmutable
     {
         return $this->dateTime;
