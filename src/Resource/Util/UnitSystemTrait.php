@@ -16,7 +16,7 @@ trait UnitSystemTrait
     {
         $this->validateUnitSystem($unitSystem);
 
-        $clone = deep_copy($this);
+        $clone = deep_copy($this, true);
         $clone->api->addQueryDefault('units', $unitSystem);
 
         return $clone;

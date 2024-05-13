@@ -16,7 +16,7 @@ trait LanguageTrait
     {
         $this->validateLanguage($language);
 
-        $clone = deep_copy($this);
+        $clone = deep_copy($this, true);
         $clone->api->addQueryDefault('lang', $language);
 
         return $clone;
