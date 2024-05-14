@@ -3,8 +3,8 @@
 - [APIs](#apis)
   - [One Call](#one-call)
     - [getWeather](#getweather)
-    - [getHistoryMoment](#gethistorymoment)
-    - [getHistoryAggregate](#gethistoryaggregate)
+    - [getWeatherByDate](#getweatherbydate)
+    - [getWeatherSummaryByDate](#getweathersummarybydate)
   - [Weather](#weather)
     - [getCurrent](#getcurrent)
     - [getForecast](#getforecast)
@@ -14,8 +14,8 @@
     - [getHistory](#gethistory)
   - [Geocoding](#geocoding)
     - [getByLocationName](#getbylocationname)
-    - [getByZipCode](#getbyzipcode)
     - [getByCoordinate](#getbycoordinate)
+    - [getByZipCode](#getbyzipcode)
 - [Common Methods](#common-methods)
   - [withUnitSystem](#withunitsystem)
   - [withLanguage](#withlanguage)
@@ -28,49 +28,44 @@
 #### `getWeather`
 
 ```php
-getWeather(float $latitude, float $longitude): OneCall
+getWeather(float $latitude, float $longitude): Weather
 ```
 
-Get current and forecast (minutely, hourly and daily) weather data.
+Get access to current weather, minute forecast for 1 hour, hourly forecast for 48 hours, 
+daily forecast for 8 days and government weather alerts.
 
-Returns a [`OneCall`](05-objects.md#onecall) object:
+Returns a [`Weather`](05-entities.md#weather) object:
 
 ```php
-$weather = $openWeatherMap->oneCall()->getWeather(50, 50);
-
-echo $weather->getCurrent()->getTemperature();
+$weather = $api->oneCall()->getWeather(50, 50);
 ```
 
-#### `getHistoryMoment`
+#### `getWeatherByDate`
 
 ```php
-getHistoryMoment(float $latitude, float $longitude, \DateTimeInterface $dateTime): WeatherLocation
+getWeatherByDate(float $latitude, float $longitude, \DateTimeInterface $dateTime): WeatherMoment
 ```
 
-Get weather data from a single moment in the past.
+Get access to weather data for any datetime.
 
-Returns a [`WeatherLocation`](05-objects.md#weatherlocation) object:
+Returns a [`WeatherMoment`](05-entities.md#weathermoment) object:
 
 ```php
-$weather = $openWeatherMap->oneCall()->getHistoryMoment(50, 50, new \DateTime('2023-01-01 12:00:00'));
-
-echo $weather->getTemperature();
+$weather = $api->oneCall()->getWeatherByDate(50, 50, new \DateTime('2023-05-13 16:32:00'));
 ```
 
-#### `getHistoryAggregate`
+#### `getWeatherSummaryByDate`
 
 ```php
-getHistoryAggregate(float $latitude, float $longitude, \DateTimeInterface $date): WeatherAggregate
+getWeatherSummaryByDate(float $latitude, float $longitude, \DateTimeInterface $date): WeatherSummary
 ```
 
-Get aggregated weather data from a single day in the past.
+Get access to aggregated weather data for a particular date.
 
-Returns a [`WeatherAggregate`](05-objects.md#weatheraggregate) object:
+Returns a [`WeatherSummary`](05-entities.md#weathersummary) object:
 
 ```php
-$weather = $openWeatherMap->oneCall()->getHistoryAggregate(50, 50, new \DateTime('1985-07-19'));
-
-echo $weather->getTemperature();
+$weatherSummary = $api->oneCall()->getWeatherSummaryByDate(50, 50, new \DateTime('1985-07-19'));
 ```
 
 ### Weather
@@ -78,38 +73,31 @@ echo $weather->getTemperature();
 #### `getCurrent`
 
 ```php
-getCurrent(float $latitude, float $longitude): WeatherLocation
+getCurrent(float $latitude, float $longitude): Weather
 ```
 
-Get current weather data.
+Get access to current weather data.
 
-Returns a [`WeatherLocation`](05-objects.md#weatherlocation-1) object:
+Returns a [`Weather`](05-entities.md#weather-2) object:
 
 ```php
-$weather = $openWeatherMap->weather()->getCurrent(50, 50);
-
-echo $weather->getTemperature();
+$currentWeather = $api->weather()->getCurrent(50, 50);
 ```
 
 #### `getForecast`
 
 ```php
-getForecast(float $latitude, float $longitude, int $numResults = 40): WeatherLocationList
+getForecast(float $latitude, float $longitude, int $numResults = 40): WeatherCollection
 ```
 
-Get weather forecast data per 3-hour steps for the next 5 days.
+Get access to 5-day weather forecast data with 3-hour steps.
 
-Returns a [`WeatherLocationList`](05-objects.md#weatherlocationlist) object:
+Returns a [`WeatherCollection`](05-entities.md#weathercollection) object:
 
 ```php
-// Since it returns 3-hour steps,
+// Since it returns data in 3-hour steps,
 // passing 8 as the numResults means it will return results for the next 24 hours
-$weatherForecast = $openWeatherMap->weather()->getForecast(50, 50, 8);
-
-foreach ($weatherForecast->getList() as $weather) {
-    echo $weather->getDateTime()->format('Y-m-d H:i:s');
-    echo $weather->getTemperature();
-}
+$weatherForecast = $api->weather()->getForecast(50, 50, 8);
 ```
 
 ### Air Pollution
@@ -117,60 +105,47 @@ foreach ($weatherForecast->getList() as $weather) {
 #### `getCurrent`
 
 ```php
-getCurrent(float $latitude, float $longitude): AirPollutionLocation
+getCurrent(float $latitude, float $longitude): AirPollution
 ```
 
-Get current air pollution data.
+Get access to current air pollution data.
 
-Returns a [`AirPollutionLocation`](05-objects.md#airpollutionlocation) object:
+Returns a [`AirPollution`](05-entities.md#airpollution) object:
 
 ```php
-$airPollution = $openWeatherMap->airPollution()->getCurrent(50, 50);
-
-echo $airPollution->getAirQuality()->getQualitativeName();
-echo $airPollution->getCarbonMonoxide();
+$currentAirPollution = $api->airPollution()->getCurrent(50, 50);
 ```
 
 #### `getForecast`
 
 ```php
-getForecast(float $latitude, float $longitude): AirPollutionLocationList
+getForecast(float $latitude, float $longitude): AirPollutionCollection
 ```
 
-Get air pollution forecast data per 1-hour for the next 24 hours.
+Get access to air pollution forecast data per hour.
 
-Returns a [`AirPollutionLocationList`](05-objects.md#airpollutionlocationlist) object:
+Returns a [`AirPollutionCollection`](05-entities.md#airpollutioncollection) object:
 
 ```php
-$airPollutionForecast = $openWeatherMap->airPollution()->getForecast(50, 50);
-
-foreach ($airPollutionForecast->getList() as $airPollution) {
-    echo $airPollution->getDateTime()->format('Y-m-d H:i:s');
-    echo $airPollution->getAirQuality()->getQualitativeName();
-    echo $airPollution->getCarbonMonoxide();
-}
+$airPollutionForecast = $api->airPollution()->getForecast(50, 50);
 ```
 
 #### `getHistory`
 
 ```php
-getHistory(float $latitude, float $longitude, \DateTimeInterface $startDate, \DateTimeInterface $endDate): AirPollutionLocationList
+getHistory(float $latitude, float $longitude, \DateTimeInterface $startDate, \DateTimeInterface $endDate): AirPollutionCollection
 ```
 
-Get air pollution history data between two dates.
+Get access to historical air pollution data per hour between two dates.
 
-Returns a [`AirPollutionLocationList`](05-objects.md#airpollutionlocationlist) object:
+Returns a [`AirPollutionCollection`](05-entities.md#airpollutioncollection) object:
 
 ```php
-$startDate = new \DateTime('-7 days'); // 7 days ago
-$endDate = new \DateTime('-6 days'); // 6 days ago
-$airPollutionHistory = $openWeatherMap->airPollution()->getHistory(50, 50, $startDate, $endDate);
+$startDate = new \DateTime('-1 day');
+$endDate = new \DateTime('now');
 
-foreach ($airPollutionHistory->getList() as $airPollution) {
-    echo $airPollution->getDateTime()->format('Y-m-d H:i:s');
-    echo $airPollution->getAirQuality()->getQualitativeName();
-    echo $airPollution->getCarbonMonoxide();
-}
+// returns air pollution data for the last 24 hours
+$airPollutionHistory = $api->airPollution()->getHistory(50, 50, $startDate, $endDate);
 ```
 
 ### Geocoding
@@ -184,33 +159,12 @@ foreach ($airPollutionHistory->getList() as $airPollution) {
 getByLocationName(string $locationName, int $numResults = 5): array
 ```
 
-Get locations data by location name.
+Get geographical coordinates (latitude, longitude) by using the name of the location (city name or area name). 
 
-Returns an array of [`Location`](05-objects.md#location) objects:
-
-```php
-$locations = $openWeatherMap->geocoding()->getByLocationName('lisbon');
-
-foreach ($locations as $location) {
-    echo $location->getName();
-    echo $location->getCountryCode();
-}
-```
-
-#### `getByZipCode`
+Returns an array of [`Location`](05-entities.md#location) objects.
 
 ```php
-getByZipCode(string $zipCode, string $countryCode): ZipCodeLocation
-```
-
-Get location data by zip/post code.
-
-Returns a [`ZipCodeLocation`](05-objects.md#zipcodelocation) object:
-
-```php
-$location = $openWeatherMap->geocoding()->getByZipCode('1000-001', 'pt');
-
-echo $location->getName();
+$locations = $api->geocoding()->getByLocationName('lisbon');
 ```
 
 #### `getByCoordinate`
@@ -222,39 +176,29 @@ echo $location->getName();
 getByCoordinate(float $latitude, float $longitude, int $numResults = 5): array
 ```
 
-Get locations data by coordinate.
+Get name of the location (city name or area name) by using geographical coordinates (latitude, longitude). 
 
-Returns an array of [`Location`](05-objects.md#location) objects:
+Returns an array of [`Location`](05-entities.md#location) objects.
 
 ```php
-$locations = $openWeatherMap->geocoding()->getByCoordinate(50, 50);
+$locations = $api->geocoding()->getByCoordinate(50, 50);
+```
 
-foreach ($locations as $location) {
-    echo $location->getName();
-    echo $location->getCountryCode();
-}
+#### `getByZipCode`
+
+```php
+getByZipCode(string $zipCode, string $countryCode): ZipLocation
+```
+
+Get geographical coordinates (latitude, longitude) by using the zip/postal code. 
+
+Returns a [`ZipLocation`](05-entities.md#ziplocation) object.
+
+```php
+$location = $api->geocoding()->getByZipCode('1000-001', 'pt');
 ```
 
 ## Common Methods
-
-#### `withUnitSystem`
-
-```php
-withUnitSystem(string $unitSystem): self
-```
-
-Makes a request with a different unit system from the one globally defined in the [configuration](02-configuration.md#unitsystem).
-
-Only available for [`OneCall`](#one-call) and [`Weather`](#weather) APIs.
-
-```php
-use ProgrammatorDev\OpenWeatherMap\UnitSystem\UnitSystem;
-
-// Uses 'imperial' unit system for this request alone
-$openWeatherMap->weather()
-    ->withUnitSystem(UnitSystem::IMPERIAL)
-    ->getCurrent(50, 50);
-```
 
 #### `withLanguage`
 
@@ -262,41 +206,57 @@ $openWeatherMap->weather()
 withLanguage(string $language): self
 ```
 
-Makes a request with a different language from the one globally defined in the [configuration](02-configuration.md#language).
-
-Only available for [`OneCall`](#one-call) and [`Weather`](#weather) APIs.
+Set the language per request. 
+Only available for [`OneCall`](#one-call) and [`Weather`](#weather) API requests.
 
 ```php
 use ProgrammatorDev\OpenWeatherMap\Language\Language
 
-// Uses 'pt' language for this request alone
-$openWeatherMap->weather()
+// uses the "pt" language for this request alone
+$api->weather()
     ->withLanguage(Language::PORTUGUESE)
+    ->getCurrent(50, 50);
+```
+
+#### `withUnitSystem`
+
+```php
+withUnitSystem(string $unitSystem): self
+```
+
+Set the unit system per request.
+Only available for [`OneCall`](#one-call) and [`Weather`](#weather) API requests.
+
+```php
+use ProgrammatorDev\OpenWeatherMap\UnitSystem\UnitSystem;
+
+// uses the "imperial" unit system for this request alone
+$api->weather()
+    ->withUnitSystem(UnitSystem::IMPERIAL)
     ->getCurrent(50, 50);
 ```
 
 #### `withCacheTtl`
 
 ```php
-withCacheTtl(int $seconds): self
+withCacheTtl(?int $ttl): self
 ```
 
 Makes a request and saves into cache for the provided duration in seconds. 
 
-If `0` seconds is provided, the request will not be cached.
+Semantics of values:
+- `0`, the response will not be cached (if the servers specifies no `max-age`).
+- `null`, the response will be cached for as long as it can (forever).
 
-> **Note**
-> Setting cache to `0` seconds will **not** invalidate any existing cache.
+> [!NOTE]
+> Setting cache to `null` or `0` seconds will **not** invalidate any existing cache.
 
-Check the [Cache TTL](02-configuration.md#cache-ttl) section for more information regarding default values.
-
-Available for all APIs if `cache` is enabled in the [configuration](02-configuration.md#cache).
+Available for all APIs if a cache adapter is set. 
+Check the following [documentation](02-configuration.md#setcachebuilder) for more information.
 
 ```php
-use ProgrammatorDev\OpenWeatherMap\Language\Language
-
-// Cache will be saved for 1 hour for this request alone
-$openWeatherMap->weather()
+// cache will be saved for 1 hour for this request alone
+$api->weather()
     ->withCacheTtl(3600)
     ->getCurrent(50, 50);
 ```

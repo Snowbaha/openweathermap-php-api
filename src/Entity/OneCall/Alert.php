@@ -18,12 +18,10 @@ class Alert
 
     public function __construct(array $data)
     {
-        $timezoneUtc = new \DateTimeZone('UTC');
-
         $this->senderName = $data['sender_name'];
         $this->eventName = $data['event'];
-        $this->startsAt = \DateTimeImmutable::createFromFormat('U', $data['start'], $timezoneUtc);
-        $this->endsAt = \DateTimeImmutable::createFromFormat('U', $data['end'], $timezoneUtc);
+        $this->startsAt = \DateTimeImmutable::createFromFormat('U', $data['start']);
+        $this->endsAt = \DateTimeImmutable::createFromFormat('U', $data['end']);
         $this->description = $data['description'];
         $this->tags = $data['tags'];
     }

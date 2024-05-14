@@ -23,7 +23,7 @@ class Wind
     }
 
     /**
-     * Wind direction, in degrees
+     * Wind direction, degrees
      */
     public function getDirection(): int
     {

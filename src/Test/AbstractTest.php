@@ -4,30 +4,24 @@ namespace ProgrammatorDev\OpenWeatherMap\Test;
 
 use Http\Mock\Client;
 use PHPUnit\Framework\TestCase;
-use ProgrammatorDev\OpenWeatherMap\Config;
-use ProgrammatorDev\OpenWeatherMap\HttpClient\HttpClientBuilder;
+use ProgrammatorDev\Api\Builder\ClientBuilder;
 use ProgrammatorDev\OpenWeatherMap\OpenWeatherMap;
 
 class AbstractTest extends TestCase
 {
-    protected const APPLICATION_KEY = 'testappkey';
+    protected const API_KEY = 'testapikey';
 
-    protected Client $mockHttpClient;
+    protected OpenWeatherMap $api;
+
+    protected Client $mockClient;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->mockHttpClient = new Client();
-    }
+        $this->mockClient = new Client();
 
-    protected function givenApi(): OpenWeatherMap
-    {
-        return new OpenWeatherMap(
-            new Config([
-                'applicationKey' => self::APPLICATION_KEY,
-                'httpClientBuilder' => new HttpClientBuilder($this->mockHttpClient)
-            ])
-        );
+        $this->api = new OpenWeatherMap(self::API_KEY);
+        $this->api->setClientBuilder(new ClientBuilder($this->mockClient));
     }
 }

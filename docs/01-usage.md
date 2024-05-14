@@ -16,16 +16,10 @@ You must sign up for an [OpenWeatherMap account](https://openweathermap.org/appi
 
 ## Installation
 
-You can install the library via [Composer](https://getcomposer.org/):
+Install the library via [Composer](https://getcomposer.org/):
 
 ```bash
 composer require programmatordev/openweathermap-php-api
-```
-
-To use the library, use Composer's [autoload](https://getcomposer.org/doc/01-basic-usage.md#autoloading):
-
-```php
-require_once 'vendor/autoload.php';
 ```
 
 ## Basic Usage
@@ -33,18 +27,13 @@ require_once 'vendor/autoload.php';
 Simple usage looks like:
 
 ```php
-use ProgrammatorDev\OpenWeatherMap\Config;
 use ProgrammatorDev\OpenWeatherMap\OpenWeatherMap;
 
-// Initialize
-$openWeatherMap = new OpenWeatherMap(
-    new Config([
-        'applicationKey' => 'yourappkey'
-    ])
-);
+// initialize
+$api = new OpenWeatherMap('yourapikey');
 
-// Get current weather by coordinate (latitude, longitude)
-$currentWeather = $openWeatherMap->weather()->getCurrent(50, 50);
-// Show current temperature
-echo $currentWeather->getTemperature();
+// get current weather by coordinate (latitude, longitude)
+$weather = $api->weather()->getCurrent(50, 50);
+// show current temperature
+echo $weather->getTemperature();
 ```

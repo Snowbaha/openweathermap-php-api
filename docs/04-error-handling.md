@@ -15,26 +15,26 @@ use ProgrammatorDev\OpenWeatherMap\Exception\UnauthorizedException;
 use ProgrammatorDev\OpenWeatherMap\Exception\UnexpectedErrorException;
 
 try {
-    $location = $openWeatherMap->geocoding()->getByZipCode('1000-001', 'pt');
+    $location = $api->geocoding()->getByZipCode('1000-001', 'pt');
+    $coordinate = $location->getCoordinate();
     
-    $weather = $openWeatherMap->oneCall()->getWeather(
-        $location->getCoordinate()->getLatitude(),
-        $location->getCoordinate()->getLongitude()
+    $weather = $api->oneCall()->getWeather(
+        $coordinate->getLatitude(), 
+        $coordinate->getLongitude()
     );
 }
-// Bad requests to the API
-// If this library is making a good job validating input data, this should not happen
+// bad request to the API
 catch (BadRequestException $exception) {
     echo $exception->getCode(); // 400
     echo $exception->getMessage();
 }
-// Invalid API key or trying to request an endpoint with no granted access
+// invalid API key or trying to request an endpoint with no granted access
 catch (UnauthorizedException $exception) {
     echo $exception->getCode(); // 401
     echo $exception->getMessage();
 }
-// Resource not found
-// For example, when trying to get a location with a zip/post code that does not exist
+// resource not found
+// for example, when trying to get a location with a zip code that does not exist
 catch (NotFoundException $exception) {
     echo $exception->getCode(); // 404
     echo $exception->getMessage();
@@ -44,7 +44,7 @@ catch (TooManyRequestsException $exception) {
     echo $exception->getCode(); // 429
     echo $exception->getMessage();
 }
-// Any other error, probably an internal error
+// any other error, probably an internal error
 catch (UnexpectedErrorException $exception) {
     echo $exception->getCode(); // 5xx
     echo $exception->getMessage();
@@ -57,14 +57,15 @@ To catch all API errors with a single exception, `ApiErrorException` is availabl
 use ProgrammatorDev\OpenWeatherMap\Exception\ApiErrorException;
 
 try {
-    $location = $openWeatherMap->geocoding()->getByZipCode('1000-001', 'pt');
+    $location = $api->geocoding()->getByZipCode('1000-001', 'pt');
+    $coordinate = $location->getCoordinate();
     
-    $weather = $openWeatherMap->oneCall()->getWeather(
-        $location->getCoordinate()->getLatitude(),
-        $location->getCoordinate()->getLongitude()
+    $weather = $api->oneCall()->getWeather(
+        $coordinate->getLatitude(), 
+        $coordinate->getLongitude()
     );
 }
-// Catches all API response errors
+// catches all API response errors
 catch (ApiErrorException $exception) {
     echo $exception->getCode();
     echo $exception->getMessage();
@@ -76,14 +77,14 @@ catch (ApiErrorException $exception) {
 To catch invalid input data (like an out of range coordinate, blank location name, etc.), the `ValidationException` is available:
 
 ```php
-use ProgrammatorDev\YetAnotherPhpValidator\Exception\ValidationException;
+use ProgrammatorDev\Validator\Exception\ValidationException;
 
 try {
-    // An invalid latitude value is given
-    $weather = $openWeatherMap->weather()->getCurrent(999, 50);
+    // an invalid latitude value is given
+    $weather = $api->weather()->getCurrent(999, 50);
 }
 catch (ValidationException $exception) {
-    // Should print:
+    // should print:
     // The latitude value should be between -90 and 90, 999 given.
     echo $exception->getMessage();
 }

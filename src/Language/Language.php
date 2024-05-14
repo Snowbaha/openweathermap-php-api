@@ -2,11 +2,11 @@
 
 namespace ProgrammatorDev\OpenWeatherMap\Language;
 
-use ProgrammatorDev\OpenWeatherMap\Util\ClassConstantsTrait;
+use ProgrammatorDev\OpenWeatherMap\Util\ReflectionTrait;
 
 class Language
 {
-    use ClassConstantsTrait;
+    use ReflectionTrait;
 
     public const AFRIKAANS = 'af';
     public const ALBANIAN = 'al';
@@ -55,7 +55,7 @@ class Language
     public const VIETNAMESE = 'vi';
     public const ZULU = 'zu';
 
-    public static function getList(): array
+    public static function getOptions(): array
     {
         return (new Language)->getClassConstants(self::class);
     }

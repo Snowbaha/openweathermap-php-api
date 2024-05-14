@@ -4,16 +4,14 @@ namespace ProgrammatorDev\OpenWeatherMap\Entity;
 
 class Icon
 {
-    private string $url = 'https://openweathermap.org/img/wn/%s@4x.png';
-
     private string $id;
 
-    private string $imageUrl;
+    private string $url;
 
     public function __construct(array $data)
     {
         $this->id = $data['icon'];
-        $this->imageUrl = \sprintf($this->url, $this->id);
+        $this->url = \sprintf('https://openweathermap.org/img/wn/%s@4x.png', $this->id);
     }
 
     public function getId(): string
@@ -21,8 +19,8 @@ class Icon
         return $this->id;
     }
 
-    public function getImageUrl(): string
+    public function getUrl(): string
     {
-        return $this->imageUrl;
+        return $this->url;
     }
 }
