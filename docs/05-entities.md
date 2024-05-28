@@ -27,8 +27,6 @@
   - [Condition](#condition)
   - [Icon](#icon)
   - [Location](#location)
-  - [MoonPhase](#moonphase)
-  - [Temperature](#temperature)
   - [Timezone](#timezone)
   - [Wind](#wind)
 
