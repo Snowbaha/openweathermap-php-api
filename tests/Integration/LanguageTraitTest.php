@@ -5,7 +5,6 @@ namespace ProgrammatorDev\OpenWeatherMap\Test\Integration;
 use ProgrammatorDev\OpenWeatherMap\Resource\Resource;
 use ProgrammatorDev\OpenWeatherMap\Resource\Util\LanguageTrait;
 use ProgrammatorDev\OpenWeatherMap\Test\AbstractTest;
-use ProgrammatorDev\Validator\Exception\ValidationException;
 
 class LanguageTraitTest extends AbstractTest
 {
@@ -29,11 +28,5 @@ class LanguageTraitTest extends AbstractTest
     {
         $this->assertSame('pt', $this->resource->withLanguage('pt')->getLanguage());
         $this->assertSame('en', $this->resource->getLanguage()); // back to default value
-    }
-
-    public function testValidationException(): void
-    {
-        $this->expectException(ValidationException::class);
-        $this->resource->withLanguage('invalid');
     }
 }

@@ -62,7 +62,6 @@ class OpenWeatherMap extends Api
         $this->optionsResolver->setAllowedTypes('language', 'string');
 
         $this->optionsResolver->setAllowedValues('unitSystem', UnitSystem::getOptions());
-        $this->optionsResolver->setAllowedValues('language', Language::getOptions());
 
         return $this->optionsResolver->resolve($options);
     }
@@ -76,7 +75,7 @@ class OpenWeatherMap extends Api
         $this->addQueryDefault('units', $this->options['unitSystem']);
         $this->addQueryDefault('lang', $this->options['language']);
 
-        $this->addPostRequestHandler(function(PostRequestEvent $event) {
+        $this->addPostRequestListener(function(PostRequestEvent $event) {
             $response = $event->getResponse();
             $statusCode = $response->getStatusCode();
 
@@ -94,7 +93,7 @@ class OpenWeatherMap extends Api
             }
         });
 
-        $this->addResponseContentsHandler(function(ResponseContentsEvent $event) {
+        $this->addResponseContentsListener(function(ResponseContentsEvent $event) {
             // decode json string response into an array
             $contents = $event->getContents();
             $contents = \json_decode($contents, true);
